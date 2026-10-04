@@ -1,0 +1,11 @@
+# Dependencias
+node_modules
+
+# Secrets / variables de entorno
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Cliente Prisma generado
+/generated/prisma

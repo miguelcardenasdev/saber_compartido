@@ -1,0 +1,209 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/database-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model calificaciones {
+  id                  Int                  @id @default(autoincrement()) @db.UnsignedInt
+  solicitudTutoriaId  Int?                 @map("solicitud_tutoria_id") @db.UnsignedInt
+  sesionGrupalId      Int?                 @map("sesion_grupal_id") @db.UnsignedInt
+  estudianteId        Int                  @map("estudiante_id") @db.UnsignedInt
+  tutorId             Int                  @map("tutor_id") @db.UnsignedInt
+  calificacion        Int                  @db.UnsignedTinyInt
+  comentario          String?              @db.Text
+  creadoEn            DateTime             @default(now()) @map("creado_en") @db.Timestamp(0)
+  usuarios            usuarios             @relation("calificaciones_estudiante_idTousuarios", fields: [estudianteId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_cal_estudiante")
+  sesiones_grupales   sesiones_grupales?   @relation(fields: [sesionGrupalId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_cal_sesion")
+  solicitudes_tutoria solicitudes_tutoria? @relation(fields: [solicitudTutoriaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_cal_solicitud")
+  usuarios_tutor      usuarios             @relation("calificaciones_tutor_idTousuarios", fields: [tutorId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_cal_tutor")
+
+  @@unique([estudianteId, sesionGrupalId], map: "uq_calificacion_sesion")
+  @@unique([estudianteId, solicitudTutoriaId], map: "uq_calificacion_solicitud")
+  @@index([sesionGrupalId], map: "fk_cal_sesion")
+  @@index([solicitudTutoriaId], map: "fk_cal_solicitud")
+  @@index([tutorId], map: "fk_cal_tutor")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model disponibilidad_tutores {
+  id                  Int                   @id @default(autoincrement()) @db.UnsignedInt
+  tutorId             Int                   @map("tutor_id") @db.UnsignedInt
+  fecha               DateTime              @db.Date
+  horaInicio          DateTime              @map("hora_inicio") @db.Time(0)
+  horaFin             DateTime              @map("hora_fin") @db.Time(0)
+  activo              Boolean               @default(true)
+  creadoEn            DateTime              @default(now()) @map("creado_en") @db.Timestamp(0)
+  usuarios            usuarios              @relation(fields: [tutorId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_disp_tutor")
+  solicitudes_tutoria solicitudes_tutoria[]
+
+  @@index([tutorId, fecha], map: "idx_disponibilidad_tutor_dia")
+}
+
+model documentos_verificacion {
+  id                        Int              @id @default(autoincrement()) @db.UnsignedInt
+  tutorMateriaId            Int              @map("tutor_materia_id") @db.UnsignedInt
+  urlArchivo                String           @map("url_archivo") @db.VarChar(500)
+  subidoEn                  DateTime         @default(now()) @map("subido_en") @db.Timestamp(0)
+  iaNombreExtraido          String?          @map("ia_nombre_extraido") @db.VarChar(150)
+  iaPrimerApellidoExtraido  String?          @map("ia_primer_apellido_extraido") @db.VarChar(150)
+  iaSegundoApellidoExtraido String?          @map("ia_segundo_apellido_extraido") @db.VarChar(150)
+  iaMateriaExtraida         String?          @map("ia_materia_extraida") @db.VarChar(150)
+  iaPromedioExtraido        Decimal?         @map("ia_promedio_extraido") @db.Decimal(3, 2)
+  iaFirmaDetectada          Boolean?         @map("ia_firma_detectada")
+  iaAlertas                 Json?            @map("ia_alertas")
+  iaProcesadoEn             DateTime?        @map("ia_procesado_en") @db.Timestamp(0)
+  tutores_materias          tutores_materias @relation(fields: [tutorMateriaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_dv_tutor_materia")
+
+  @@index([tutorMateriaId], map: "fk_dv_tutor_materia")
+}
+
+model inscripciones_sesion_grupal {
+  id                Int                                @id @default(autoincrement()) @db.UnsignedInt
+  sesionGrupalId    Int                                @map("sesion_grupal_id") @db.UnsignedInt
+  estudianteId      Int                                @map("estudiante_id") @db.UnsignedInt
+  inscritoEn        DateTime                           @default(now()) @map("inscrito_en") @db.Timestamp(0)
+  estado            inscripciones_sesion_grupal_estado @default(confirmada)
+  usuarios          usuarios                           @relation(fields: [estudianteId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_isg_estudiante")
+  sesiones_grupales sesiones_grupales                  @relation(fields: [sesionGrupalId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_isg_sesion")
+
+  @@unique([sesionGrupalId, estudianteId], map: "uq_sesion_estudiante")
+  @@index([estudianteId], map: "fk_isg_estudiante")
+}
+
+model materias {
+  id                  Int                   @id @default(autoincrement()) @db.UnsignedInt
+  nombre              String                @unique(map: "nombre") @db.VarChar(150)
+  sesiones_grupales   sesiones_grupales[]
+  solicitudes_tutoria solicitudes_tutoria[]
+  tutores_materias    tutores_materias[]
+}
+
+model sesiones_grupales {
+  id                          Int                           @id @default(autoincrement()) @db.UnsignedInt
+  tutorId                     Int                           @map("tutor_id") @db.UnsignedInt
+  materiaId                   Int                           @map("materia_id") @db.UnsignedInt
+  titulo                      String                        @db.VarChar(150)
+  descripcion                 String?                       @db.Text
+  fechaHoraSesion             DateTime                      @map("fecha_hora_sesion") @db.DateTime(0)
+  cupo                        Int                           @db.UnsignedSmallInt
+  estado                      sesiones_grupales_estado      @default(abierta)
+  creadoEn                    DateTime                      @default(now()) @map("creado_en") @db.Timestamp(0)
+  calificaciones              calificaciones[]
+  inscripciones_sesion_grupal inscripciones_sesion_grupal[]
+  materias                    materias                      @relation(fields: [materiaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sg_materia")
+  usuarios                    usuarios                      @relation(fields: [tutorId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sg_tutor")
+
+  @@index([materiaId], map: "fk_sg_materia")
+  @@index([tutorId], map: "fk_sg_tutor")
+  @@index([estado], map: "idx_sesiones_grupales_estado")
+  @@index([fechaHoraSesion], map: "idx_sesiones_grupales_fecha")
+}
+
+model solicitudes_tutoria {
+  id                                                   Int                        @id @default(autoincrement()) @db.UnsignedInt
+  estudianteId                                         Int                        @map("estudiante_id") @db.UnsignedInt
+  tutorId                                              Int                        @map("tutor_id") @db.UnsignedInt
+  materiaId                                            Int                        @map("materia_id") @db.UnsignedInt
+  disponibilidadId                                     Int                        @map("disponibilidad_id") @db.UnsignedInt
+  fechaHoraSolicitud                                   DateTime                   @map("fecha_hora_solicitud") @db.DateTime(0)
+  mensaje                                              String?                    @db.Text
+  estado                                               solicitudes_tutoria_estado @default(pendiente)
+  creadoEn                                             DateTime                   @default(now()) @map("creado_en") @db.Timestamp(0)
+  actualizadoEn                                        DateTime                   @default(now()) @map("actualizado_en") @db.Timestamp(0)
+  calificaciones                                       calificaciones[]
+  disponibilidad_tutores                               disponibilidad_tutores     @relation(fields: [disponibilidadId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_st_disponibilidad")
+  usuarios_solicitudes_tutoria_estudiante_idTousuarios usuarios                   @relation("solicitudes_tutoria_estudiante_idTousuarios", fields: [estudianteId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_st_estudiante")
+  materias                                             materias                   @relation(fields: [materiaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_st_materia")
+  usuarios_solicitudes_tutoria_tutor_idTousuarios      usuarios                   @relation("solicitudes_tutoria_tutor_idTousuarios", fields: [tutorId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_st_tutor")
+
+  @@index([estudianteId], map: "fk_st_estudiante")
+  @@index([materiaId], map: "fk_st_materia")
+  @@index([tutorId], map: "fk_st_tutor")
+  @@index([estado], map: "idx_solicitudes_tutoria_estado")
+  @@index([fechaHoraSolicitud], map: "idx_solicitudes_tutoria_fecha")
+  @@index([disponibilidadId], map: "idx_st_disponibilidad")
+}
+
+model tutores_materias {
+  id                                               Int                       @id @default(autoincrement()) @db.UnsignedInt
+  tutorId                                          Int                       @map("tutor_id") @db.UnsignedInt
+  materiaId                                        Int                       @map("materia_id") @db.UnsignedInt
+  promedioAcademico                                Decimal                   @map("promedio_academico") @db.Decimal(3, 2)
+  estado                                           tutores_materias_estado   @default(pendiente)
+  revisadoPor                                      Int?                      @map("revisado_por") @db.UnsignedInt
+  revisadoEn                                       DateTime?                 @map("revisado_en") @db.Timestamp(0)
+  creadoEn                                         DateTime                  @default(now()) @map("creado_en") @db.Timestamp(0)
+  documentos_verificacion                          documentos_verificacion[]
+  usuarios_tutores_materias_revisado_porTousuarios usuarios?                 @relation("tutores_materias_revisado_porTousuarios", fields: [revisadoPor], references: [id], onUpdate: NoAction, map: "fk_tm_admin")
+  materias                                         materias                  @relation(fields: [materiaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tm_materia")
+  usuarios_tutores_materias_tutor_idTousuarios     usuarios                  @relation("tutores_materias_tutor_idTousuarios", fields: [tutorId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tm_tutor")
+
+  @@unique([tutorId, materiaId], map: "uq_tutor_materia")
+  @@index([revisadoPor], map: "fk_tm_admin")
+  @@index([materiaId], map: "fk_tm_materia")
+  @@index([estado], map: "idx_tutores_materias_estado")
+}
+
+model usuarios {
+  id                                                              Int                           @id @default(autoincrement()) @db.UnsignedInt
+  nombres                                                         String                        @db.VarChar(100)
+  apellidos                                                       String                        @db.VarChar(100)
+  correoInstitucional                                             String                        @unique(map: "correo_institucional") @map("correo_institucional") @db.VarChar(150)
+  contrasenaHash                                                  String                        @map("contrasena_hash") @db.VarChar(255)
+  rol                                                             usuarios_rol                  @default(estudiante)
+  emailVerificado                                                 Boolean                       @default(false) @map("email_verificado")
+  tokenVerificacion                                               String?                       @map("token_verificacion") @db.VarChar(255)
+  tokenExpira                                                     DateTime?                     @map("token_expira") @db.DateTime(0)
+  creadoEn                                                        DateTime                      @default(now()) @map("creado_en") @db.Timestamp(0)
+  actualizadoEn                                                   DateTime                      @default(now()) @map("actualizado_en") @db.Timestamp(0)
+  calificaciones_calificaciones_estudiante_idTousuarios           calificaciones[]              @relation("calificaciones_estudiante_idTousuarios")
+  calificaciones_calificaciones_tutor_idTousuarios                calificaciones[]              @relation("calificaciones_tutor_idTousuarios")
+  disponibilidad_tutores                                          disponibilidad_tutores[]
+  inscripciones_sesion_grupal                                     inscripciones_sesion_grupal[]
+  sesiones_grupales                                               sesiones_grupales[]
+  solicitudes_tutoria_solicitudes_tutoria_estudiante_idTousuarios solicitudes_tutoria[]         @relation("solicitudes_tutoria_estudiante_idTousuarios")
+  solicitudes_tutoria_solicitudes_tutoria_tutor_idTousuarios      solicitudes_tutoria[]         @relation("solicitudes_tutoria_tutor_idTousuarios")
+  tutores_materias_tutores_materias_revisado_porTousuarios        tutores_materias[]            @relation("tutores_materias_revisado_porTousuarios")
+  tutores_materias_tutores_materias_tutor_idTousuarios            tutores_materias[]            @relation("tutores_materias_tutor_idTousuarios")
+
+  @@index([tokenVerificacion], map: "idx_usuarios_token_verificacion")
+}
+
+enum tutores_materias_estado {
+  pendiente
+  aprobado
+  rechazado
+}
+
+enum inscripciones_sesion_grupal_estado {
+  confirmada
+  cancelada
+}
+
+enum usuarios_rol {
+  estudiante
+  tutor
+  administrador
+}
+
+enum sesiones_grupales_estado {
+  abierta
+  llena
+  cancelada
+  completada
+}
+
+enum solicitudes_tutoria_estado {
+  pendiente
+  aceptada
+  rechazada
+  completada
+  cancelada
+}
