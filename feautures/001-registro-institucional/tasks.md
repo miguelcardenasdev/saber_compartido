@@ -10,7 +10,7 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 
 ### Backend
 
-- [ ] Crear `registro.schema.js` con Zod: `correo` (formato email + termina en `@amigo.edu.co`), `contrasena` (8+, mayúscula, minúscula, número, carácter especial, sin nombre/apellido), `nombres`, `apellidos` — `backend/src/modules/auth/registro.schema.js`.
+- [x] Crear `registro.schema.js` con Zod: `correo` (formato email + termina en `@amigo.edu.co`), `contrasena` (8+, mayúscula, minúscula, número, carácter especial, sin nombre/apellido), `nombres`, `apellidos` — `backend/src/modules/auth/registro.schema.js`.
 - [ ] Implementar `auth.repository.js`: `crearUsuario()`, `buscarPorCorreo()`, `marcarCorreoVerificado()` — `backend/src/modules/auth/auth.repository.js`.
 - [ ] Implementar `auth.service.js`: hash con bcrypt, verificar duplicado por `correo_institucional`, generar `token_verificacion` + `token_expira`, orquestar envío del correo — `backend/src/modules/auth/auth.service.js`.
 - [ ] Elegir proveedor de envío de correo (Resend o Nodemailer + SMTP) e implementar el envío — `backend/src/shared/email/`.
