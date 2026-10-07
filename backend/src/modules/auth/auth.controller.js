@@ -1,0 +1,50 @@
+import { registrarUsuario } from "./auth.service.js";
+import { buscarPorToken, marcarCorreoVerificado } from "./auth.repository.js";
+
+export const registrar = async (req, res, next) => {
+  try {
+    const usuario = await registrarUsuario(req.body);
+    return res.status(201).json({
+      mensaje: "Cuenta creada. Revisa tu correo para verificarla.",
+      usuario,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const verificarCorreo = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+    const usuario = token ? await buscarPorToken(token) : null;
+
+    if (!usuario) {
+      return res.status(400).json({
+        codigo: "TOKEN_INVALIDO",
+        mensaje: "El enlace de verificación no es válido",
+      });
+    }
+
+    if (usuario.emailVerificado) {
+      return res.status(200).json({
+        codigo: "YA_VERIFICADO",
+        mensaje: "Tu correo ya estaba verificado",
+      });
+    }
+
+    if (!usuario.tokenExpira || usuario.tokenExpira.getTime() < Date.now()) {
+      return res.status(400).json({
+        codigo: "TOKEN_EXPIRADO",
+        mensaje: "El enlace de verificación expiró. Solicita uno nuevo",
+      });
+    }
+
+    await marcarCorreoVerificado(usuario.id);
+    return res.status(200).json({
+      codigo: "CORREO_VERIFICADO",
+      mensaje: "Tu correo quedó verificado. Ya puedes iniciar sesión",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

@@ -6,6 +6,12 @@ export const buscarPorCorreo = async (correo) => {
   });
 };
 
+export const buscarPorToken = async (token) => {
+  return prisma.usuarios.findUnique({
+    where: { tokenVerificacion: token },
+  });
+};
+
 export const crearUsuario = async ({
   nombres,
   apellidos,
