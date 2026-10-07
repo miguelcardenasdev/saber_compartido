@@ -15,7 +15,7 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 - [x] Implementar `auth.service.js`: hash con bcrypt, verificar duplicado por `correo_institucional`, generar `token_verificacion` + `token_expira`, orquestar envío del correo — `backend/src/modules/auth/auth.service.js`.
 - [x] Elegir proveedor de envío de correo (Resend o Nodemailer + SMTP) e implementar el envío — `backend/src/shared/email/`.
 - [x] Implementar `auth.controller.js` y `auth.routes.js`: `POST /api/auth/registro`, `GET /api/auth/verificar/:token` (valida que el token no haya expirado antes de marcar `email_verificado = 1`) — `backend/src/modules/auth/`.
-- [ ] Middleware de errores para los casos: correo no institucional, correo duplicado, contraseña inválida, token expirado/inválido — `backend/src/shared/middlewares/errorHandler.js`.
+- [x] Middleware de errores para los casos: correo no institucional, correo duplicado, contraseña inválida, token expirado/inválido — `backend/src/shared/middlewares/errorHandler.js`.
 
 ### Frontend
 

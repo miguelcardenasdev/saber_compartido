@@ -1,4 +1,4 @@
-import { registrarUsuario } from "./auth.service.js";
+import { errorNegocio, registrarUsuario } from "./auth.service.js";
 import { buscarPorToken, marcarCorreoVerificado } from "./auth.repository.js";
 
 export const registrar = async (req, res, next) => {
@@ -19,10 +19,7 @@ export const verificarCorreo = async (req, res, next) => {
     const usuario = token ? await buscarPorToken(token) : null;
 
     if (!usuario) {
-      return res.status(400).json({
-        codigo: "TOKEN_INVALIDO",
-        mensaje: "El enlace de verificación no es válido",
-      });
+      throw errorNegocio("TOKEN_INVALIDO", "El enlace de verificación no es válido", 400);
     }
 
     if (usuario.emailVerificado) {
@@ -33,10 +30,11 @@ export const verificarCorreo = async (req, res, next) => {
     }
 
     if (!usuario.tokenExpira || usuario.tokenExpira.getTime() < Date.now()) {
-      return res.status(400).json({
-        codigo: "TOKEN_EXPIRADO",
-        mensaje: "El enlace de verificación expiró. Solicita uno nuevo",
-      });
+      throw errorNegocio(
+        "TOKEN_EXPIRADO",
+        "El enlace de verificación expiró. Solicita uno nuevo",
+        400,
+      );
     }
 
     await marcarCorreoVerificado(usuario.id);

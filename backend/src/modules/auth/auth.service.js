@@ -6,7 +6,7 @@ import { enviarCorreoVerificacion } from "../../shared/email/correo.service.js";
 const COSTO_BCRYPT = 10;
 const DURACION_TOKEN_HORAS = 24;
 
-const errorNegocio = (codigo, mensaje, status) =>
+export const errorNegocio = (codigo, mensaje, status) =>
   Object.assign(new Error(mensaje), { codigo, status });
 
 export const registrarUsuario = async ({ nombres, apellidos, correo, contrasena }) => {

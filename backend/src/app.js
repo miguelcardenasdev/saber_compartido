@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "./config/index.js";
 import {transporte} from "./shared/email/transporte.js";
 import authRoutes from "./modules/auth/auth.routes.js";
+import { errorHandler } from "./shared/middlewares/errorHandler.js";
 
 const app = express();
 
@@ -15,6 +16,8 @@ transporte.verify()
 app.get("/api/salud", (req, res) => {
   res.json({ estado: "ok" });
 });
+
+app.use(errorHandler);
 
 app.listen(config.puerto, () => {
   console.log(`Servidor escuchando en http://localhost:${config.puerto}`);
