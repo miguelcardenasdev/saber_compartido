@@ -19,6 +19,7 @@
     "dotenv": "^18.0.5",
     "express": "^5.2.1",
     "mariadb": "^3.5.4",
+    "nodemailer": "^10.0.14",
     "zod": "^4.6.5"
   },
   "devDependencies": {

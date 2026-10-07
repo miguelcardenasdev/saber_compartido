@@ -11,9 +11,9 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 ### Backend
 
 - [x] Crear `registro.schema.js` con Zod: `correo` (formato email + termina en `@amigo.edu.co`), `contrasena` (8+, mayúscula, minúscula, número, carácter especial, sin nombre/apellido), `nombres`, `apellidos` — `backend/src/modules/auth/registro.schema.js`.
-- [ ] Implementar `auth.repository.js`: `crearUsuario()`, `buscarPorCorreo()`, `marcarCorreoVerificado()` — `backend/src/modules/auth/auth.repository.js`.
-- [ ] Implementar `auth.service.js`: hash con bcrypt, verificar duplicado por `correo_institucional`, generar `token_verificacion` + `token_expira`, orquestar envío del correo — `backend/src/modules/auth/auth.service.js`.
-- [ ] Elegir proveedor de envío de correo (Resend o Nodemailer + SMTP) e implementar el envío — `backend/src/shared/email/`.
+- [x] Implementar `auth.repository.js`: `crearUsuario()`, `buscarPorCorreo()`, `marcarCorreoVerificado()` — `backend/src/modules/auth/auth.repository.js`.
+- [x] Implementar `auth.service.js`: hash con bcrypt, verificar duplicado por `correo_institucional`, generar `token_verificacion` + `token_expira`, orquestar envío del correo — `backend/src/modules/auth/auth.service.js`.
+- [x] Elegir proveedor de envío de correo (Resend o Nodemailer + SMTP) e implementar el envío — `backend/src/shared/email/`.
 - [ ] Implementar `auth.controller.js` y `auth.routes.js`: `POST /api/auth/registro`, `GET /api/auth/verificar/:token` (valida que el token no haya expirado antes de marcar `email_verificado = 1`) — `backend/src/modules/auth/`.
 - [ ] Middleware de errores para los casos: correo no institucional, correo duplicado, contraseña inválida, token expirado/inválido — `backend/src/shared/middlewares/errorHandler.js`.
 
