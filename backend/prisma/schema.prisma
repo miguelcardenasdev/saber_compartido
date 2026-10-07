@@ -159,7 +159,7 @@ model usuarios {
   contrasenaHash                                                  String                        @map("contrasena_hash") @db.VarChar(255)
   rol                                                             usuarios_rol                  @default(estudiante)
   emailVerificado                                                 Boolean                       @default(false) @map("email_verificado")
-  tokenVerificacion                                               String?                       @map("token_verificacion") @db.VarChar(255)
+  tokenVerificacion                                               String?                       @unique(map: "uq_usuarios_token_verificacion") @map("token_verificacion") @db.VarChar(255)
   tokenExpira                                                     DateTime?                     @map("token_expira") @db.DateTime(0)
   creadoEn                                                        DateTime                      @default(now()) @map("creado_en") @db.Timestamp(0)
   actualizadoEn                                                   DateTime                      @default(now()) @map("actualizado_en") @db.Timestamp(0)
@@ -172,8 +172,6 @@ model usuarios {
   solicitudes_tutoria_solicitudes_tutoria_tutor_idTousuarios      solicitudes_tutoria[]         @relation("solicitudes_tutoria_tutor_idTousuarios")
   tutores_materias_tutores_materias_revisado_porTousuarios        tutores_materias[]            @relation("tutores_materias_revisado_porTousuarios")
   tutores_materias_tutores_materias_tutor_idTousuarios            tutores_materias[]            @relation("tutores_materias_tutor_idTousuarios")
-
-  @@index([tokenVerificacion], map: "idx_usuarios_token_verificacion")
 }
 
 enum tutores_materias_estado {
