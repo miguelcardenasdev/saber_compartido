@@ -20,8 +20,8 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 ### Frontend
 
 - [x] Formulario de registro (nombres, apellidos, correo, contraseña) con la paleta, tipografías y breakpoints de `tech-stack.md` — `frontend/src/features/auth/`.
-- [ ] Validación en cliente con mensajes de error por campo.
-- [ ] Conectar el formulario al endpoint de registro; manejar estados de carga, error y éxito ("revisa tu correo").
+- [x] Validación en cliente con mensajes de error por campo.
+- [x] Conectar el formulario al endpoint de registro; manejar estados de carga, error y éxito ("revisa tu correo").
 - [ ] Pantalla/estado para cuando el usuario entra al enlace de verificación (éxito, token expirado, token inválido).
 - [ ] Verificar que el formulario sea usable en móvil (mobile-first).
 

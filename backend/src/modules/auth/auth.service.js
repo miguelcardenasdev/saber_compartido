@@ -36,10 +36,12 @@ export const registrarUsuario = async ({ nombres, apellidos, correo, contrasena 
     throw error;
   }
 
-  await enviarCorreoVerificacion({
+  enviarCorreoVerificacion({
     correo: usuario.correoInstitucional,
     nombres: usuario.nombres,
     token: tokenVerificacion,
+  }).catch((error) => {
+    console.error("No se pudo enviar el correo de verificación:", error);
   });
 
   return {
