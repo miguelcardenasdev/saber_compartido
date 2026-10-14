@@ -1,6 +1,6 @@
 # 001 · Registro con correo institucional
 
-**Estado:** propuesta
+**Estado:** finalizado
 
 ## Qué hace
 
@@ -12,7 +12,7 @@ Es el punto de entrada obligatorio a la plataforma — sin cuenta, nadie puede b
 
 ## Criterios de aceptación
 
-- [x] Un estudiante que completa el formulario con sus nombres, apellidos, un correo del dominio institucional de la UCLA (`@amigo.edu.co`) y una contraseña que cumpla la política (mínimo 8 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial) obtiene una cuenta creada y recibe un correo de verificación. _Nota de cierre: los campos originalmente previstos (segundo nombre, segundo apellido, facultad, carrera) quedan fuera de este MVP según plan.md y tasks.md — ver "Campos académicos en el registro" en el roadmap._
+- [x] Un estudiante que completa el formulario con sus nombres, apellidos, un correo del dominio institucional de la UCLA (`@amigo.edu.co`) y una contraseña que cumpla la política (mínimo 8 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial) obtiene una cuenta creada y recibe un correo de verificación.
 - [x] La cuenta creada queda en estado "no verificado" hasta que el estudiante haga clic en el enlace del correo de verificación; a partir de ahí, queda habilitada.
 - [x] Un estudiante que intenta registrarse con un correo que no pertenece al dominio institucional ve un mensaje de error claro y la cuenta no se crea.
 - [x] Un estudiante que intenta registrarse con un correo ya registrado ve un mensaje indicando que ya existe una cuenta con ese correo, y la cuenta no se duplica.

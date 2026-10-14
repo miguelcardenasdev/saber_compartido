@@ -22,7 +22,7 @@
 
 - `npm run dev` — arranca el entorno local (backend y frontend por separado, cada uno en su carpeta).
 - `npm test` — no aplica aún; se define si se agregan tests de lógica crítica.
-- `npm run lint` — ESLint + Prettier.
+- `npm run lint` — oxlint.
 - `npm run build` — compila el frontend para producción (Vite build); el backend en JavaScript plano no necesita paso de build.
 
 ## Modelo de datos / dominio
