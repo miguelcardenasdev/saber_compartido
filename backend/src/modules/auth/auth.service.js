@@ -1,13 +1,11 @@
 import bcrypt from "bcrypt";
 import { randomBytes } from "node:crypto";
 import { buscarPorCorreo, crearUsuario } from "./auth.repository.js";
+import { errorNegocio } from "../../shared/errores/error-negocio.js";
 import { enviarCorreoVerificacion } from "../../shared/email/correo.service.js";
 
 const COSTO_BCRYPT = 10;
 const DURACION_TOKEN_HORAS = 24;
-
-export const errorNegocio = (codigo, mensaje, status) =>
-  Object.assign(new Error(mensaje), { codigo, status });
 
 export const registrarUsuario = async ({ nombres, apellidos, correo, contrasena }) => {
   const existente = await buscarPorCorreo(correo);

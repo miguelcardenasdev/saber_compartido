@@ -1,4 +1,5 @@
-import { errorNegocio, registrarUsuario } from "./auth.service.js";
+import { registrarUsuario } from "./auth.service.js";
+import { errorNegocio } from "../../shared/errores/error-negocio.js";
 import { buscarPorToken, marcarCorreoVerificado } from "./auth.repository.js";
 
 export const registrar = async (req, res, next) => {
