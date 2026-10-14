@@ -37,8 +37,6 @@ export const marcarCorreoVerificado = async (id) => {
     where: { id },
     data: {
       emailVerificado: true,
-      tokenVerificacion: null,
-      tokenExpira: null,
     },
   });
 };

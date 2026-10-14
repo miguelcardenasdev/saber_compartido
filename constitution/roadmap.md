@@ -2,16 +2,16 @@
 
 ## Hecho ✅
 
+1. **001 · Registro con correo institucional** — permite que un estudiante cree su cuenta con correo institucional y quede habilitado tras verificarla (REG-USR-001).
 
 ## Siguiente 🔜
 
-1. **001 · Registro con correo institucional** — permite que un estudiante cree su cuenta con correo institucional y quede habilitado tras verificarla (REG-USR-001).
+2. **002 · Inicio de sesión** — autenticación con correo y contraseña; bloquea el acceso si el correo no está verificado (REG-USR-002).
 
 ## Backlog / ideas 💡
 
 _Orden aproximado según lo definido en tech-stack.md (por épicas y dependencias) — nada aquí está comprometido a una fecha, solo la entrada en "Siguiente" lo está:_
 
-- **Inicio de sesión** — autenticación con correo y contraseña; bloquea el acceso si el correo no está verificado (REG-USR-002).
 - **Acceso al dashboard** — pantalla central tras iniciar sesión, con guard de autenticación (DAS-EST-001).
 - **Accesos directos del dashboard** — enlaces rápidos a buscar tutores, mis tutorías y cambiar a modo tutor (DAS-EST-002).
 - **Registro como tutor** — un estudiante se postula como tutor de una materia y adjunta su certificado de notas (TUT-REG-001).

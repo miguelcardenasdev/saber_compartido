@@ -22,20 +22,20 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 - [x] Formulario de registro (nombres, apellidos, correo, contraseña) con la paleta, tipografías y breakpoints de `tech-stack.md` — `frontend/src/features/auth/`.
 - [x] Validación en cliente con mensajes de error por campo.
 - [x] Conectar el formulario al endpoint de registro; manejar estados de carga, error y éxito ("revisa tu correo").
-- [ ] Pantalla/estado para cuando el usuario entra al enlace de verificación (éxito, token expirado, token inválido).
-- [ ] Verificar que el formulario sea usable en móvil (mobile-first).
+- [x] Pantalla/estado para cuando el usuario entra al enlace de verificación (éxito, token expirado, token inválido).
+- [x] Verificar que el formulario sea usable en móvil (mobile-first).
 
 ### Pruebas / validación
 
-- [ ] Probar manualmente cada criterio de `spec.md`: correo institucional válido, correo no institucional, correo duplicado, contraseña fuera de política, campos vacíos.
-- [ ] Confirmar que el correo de verificación llega y que el enlace marca `email_verificado = 1`.
-- [ ] Confirmar que un token expirado no verifica la cuenta.
+- [x] Probar manualmente cada criterio de `spec.md`: correo institucional válido, correo no institucional, correo duplicado, contraseña fuera de política, campos vacíos.
+- [x] Confirmar que el correo de verificación llega y que el enlace marca `email_verificado = 1`.
+- [x] Confirmar que un token expirado no verifica la cuenta.
 
 ### Cierre
 
-- [ ] Actualizar `tech-stack.md` con las columnas nuevas de `usuarios` y el proveedor de correo elegido.
-- [ ] Validar contra los criterios de aceptación de `spec.md`.
-- [ ] Mover la feature a "Hecho" en `../../constitution/roadmap.md`.
+- [x] Actualizar `tech-stack.md` con las columnas nuevas de `usuarios` y el proveedor de correo elegido.
+- [x] Validar contra los criterios de aceptación de `spec.md`.
+- [x] Mover la feature a "Hecho" en `../../constitution/roadmap.md`.
 
 ## Mantenimiento (checklist recurrente)
 

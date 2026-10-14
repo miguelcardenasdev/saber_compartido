@@ -7,6 +7,7 @@
 - **Base de datos:** MySQL con Prisma como ORM. En desarrollo, MySQL corre en un contenedor local vía `docker-compose` (mismo entorno para los 3). En producción, MySQL gestionado en Aiven.
 - **Tests:** no hay suite formal por el plazo del MVP. En su lugar, cada historia se valida manualmente contra sus criterios de aceptación (ya documentados por historia en el backlog). Si el tiempo alcanza, se agregan tests unitarios solo a lógica crítica sin UI (ej. cálculo de cupos, validación de conflictos de horario) con Vitest — no a todo el proyecto.
 - **Despliegue:** Aplicación completa (backend + frontend) desplegada vía Docker en Railway; base de datos de producción en Aiven, no en Railway. Variable de conexión (`DATABASE_URL`) cambia entre entornos: apunta al contenedor local en desarrollo y a Aiven en producción — el resto del `Dockerfile` no cambia.
+- **Correo de transacción:** Nodemailer + SMTP de Gmail (STARTTLS, puerto 587) — `backend/src/shared/email/`. El envío es **asíncrono**: el `201` de registro no espera al correo; si el envío falla, el error queda en los logs del backend sin afectar al usuario (la feature de "reenviar verificación" queda en el backlog de mantenimiento).
 
 ## Archivos / módulos clave
 
@@ -28,6 +29,7 @@
 
 - `usuarios.rol` — `estudiante` | `tutor` | `administrador`. Pasa de `estudiante` a `tutor` automáticamente cuando al menos una fila de `tutores_materias` del usuario llega a `estado = 'aprobado'` (no antes — mientras esté `pendiente`, sigue viéndose como `estudiante`). Esta actualización debe ocurrir en la misma transacción que aprueba al tutor (TUT-VER-001). El frontend usa este campo para habilitar el switch "modo tutor" (DAS-EST-002) — no hay un valor combinado; el usuario conserva su vista de estudiante y además gana acceso a la de tutor.
 - `usuarios.correo_institucional` — debe terminar en `@amigo.edu.co`; se valida en el registro (REG-USR-001).
+- `usuarios.email_verificado`, `usuarios.token_verificacion`, `usuarios.token_expira` — ciclo de verificación de correo (REG-USR-001). La cuenta nace con `email_verificado = 0`; el registro genera un token hexadecimal de 32 bytes con vencimiento de 24 h y envía el enlace `${URL_FRONTEND}/verificar/<token>`. `token_verificacion` es **UNIQUE** en la BD (`uq_usuarios_token_verificacion`) y se conserva después de verificar: el enlace es reutilizable hasta su vencimiento (un segundo clic responde `YA_VERIFICADO`); vencido sin verificar responde `TOKEN_EXPIRADO` y la cuenta sigue inhabilitada. La verificación la resuelve `GET /api/auth/verificar/:token`.
 - `tutores_materias.estado` — `pendiente` | `aprobado` | `rechazado`, por tutor **y por materia** (un tutor puede quedar aprobado en una materia y rechazado en otra). Solo las filas en `aprobado` hacen público al tutor en esa materia y lo hacen visible en búsqueda (BUS-TUT-001).
 - `tutores_materias.promedio_academico` — debe ser ≥ 4.0 para que la IA apruebe la verificación; por debajo de eso, el estado pasa a `rechazado` (TUT-VER-001).
 - `disponibilidad_tutores` — bloques de horario concretos (`fecha` + `hora_inicio` + `hora_fin`), no recurrentes.
