@@ -5,8 +5,8 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 ### Backend
 
 - [x] Anunciar al equipo e instalar las dependencias nuevas `jsonwebtoken` y `cookie-parser` — `backend/package.json`.
-- [ ] Agregar la configuración de sesión: `JWT_SECRET`, duración de 7 días, nombre de la cookie y bandera `secure` (activa solo con `NODE_ENV=production`). Si `JWT_SECRET` falta o tiene menos de 32 caracteres, el servidor no arranca — `backend/src/config/index.js`.
-- [ ] Documentar `JWT_SECRET` con un placeholder en `.env.example` y generar un secreto local en `backend/.env` con `node -p "crypto.randomBytes(48).toString('hex')"` (sin commitearlo) — `backend/.env.template`.
+- [x] Agregar la configuración de sesión: `JWT_SECRET`, duración de 7 días, nombre de la cookie y bandera `secure` (activa solo con `NODE_ENV=production`). Si `JWT_SECRET` falta o tiene menos de 32 caracteres, el servidor no arranca — `backend/src/config/index.js`.
+- [x] Documentar `JWT_SECRET` con un placeholder en `.env.example` y generar un secreto local en `backend/.env` con `node -p "crypto.randomBytes(48).toString('hex')"` (sin commitearlo) — `backend/.env.template`.
 - [ ] Mover `errorNegocio` a un archivo compartido y hacer que `auth.service.js` lo importe de ahí — `backend/src/shared/errores/error-negocio.js`.
 - [ ] Crear `login.schema.js` con Zod 4: `correo` (string, trim, formato email) y `contrasena` (string no vacía), con mensajes en español y sin la política de contraseña — `backend/src/modules/auth/login.schema.js`.
 - [ ] Agregar `buscarPorId()` y confirmar que `buscarPorCorreo()` devuelve `contrasenaHash`, `emailVerificado`, `nombres`, `apellidos` y `rol` — `backend/src/modules/auth/auth.repository.js`.
