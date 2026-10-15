@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { randomBytes } from "node:crypto";
-import { buscarPorCorreo, crearUsuario } from "./auth.repository.js";
+import { buscarPorCorreo, buscarPorId, crearUsuario } from "./auth.repository.js";
 import { errorNegocio } from "../../shared/errores/error-negocio.js";
 import { enviarCorreoVerificacion } from "../../shared/email/correo.service.js";
 import { config } from "../../config/index.js";
@@ -11,6 +11,14 @@ const DURACION_TOKEN_HORAS = 24;
 
 const HASH_RELLENO =
   "$2b$10$TW4DSQH.SfpcaDacuu381O58IteGKSbYdRRIG56BfpQs5k3tSrfjS";
+
+const presentarUsuario = (usuario) => ({
+  id: usuario.id,
+  nombres: usuario.nombres,
+  apellidos: usuario.apellidos,
+  correo: usuario.correoInstitucional,
+  rol: usuario.rol,
+});
 
 export const registrarUsuario = async ({ nombres, apellidos, correo, contrasena }) => {
   const existente = await buscarPorCorreo(correo);
@@ -85,12 +93,20 @@ export const iniciarSesion = async ({ correo, contrasena }) => {
 
   return {
     token,
-    usuario: {
-      id: usuario.id,
-      nombres: usuario.nombres,
-      apellidos: usuario.apellidos,
-      correo: usuario.correoInstitucional,
-      rol: usuario.rol,
-    },
+    usuario: presentarUsuario(usuario),
   };
+};
+
+export const obtenerSesion = async (usuarioId) => {
+  const usuario = await buscarPorId(usuarioId);
+
+  if (!usuario) {
+    throw errorNegocio(
+      "SESION_INVALIDA",
+      "Tu sesión ya no es válida. Inicia sesión de nuevo",
+      401,
+    );
+  }
+
+  return presentarUsuario(usuario);
 };
