@@ -12,11 +12,11 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 - [x] Agregar `buscarPorId()` y confirmar que `buscarPorCorreo()` devuelve `contrasenaHash`, `emailVerificado`, `nombres`, `apellidos` y `rol` — `backend/src/modules/auth/auth.repository.js`.
 - [x] Implementar `iniciarSesion({ correo, contrasena })` en el service: buscar usuario → `bcrypt.compare` (contra un hash de relleno si el correo no existe) → `CREDENCIALES_INVALIDAS` (401, "Correo o contraseña incorrectos") → `CORREO_NO_VERIFICADO` (403) → firmar JWT de 7 días con el id en `sub`. Devuelve `{ token, usuario: { id, nombres, apellidos, correo, rol } }`, sin hash ni campos de verificación — `backend/src/modules/auth/auth.service.js`.
 - [x] Implementar `obtenerSesion(usuarioId)` en el service: busca al usuario y lanza `SESION_INVALIDA` (401) si ya no existe — `backend/src/modules/auth/auth.service.js`.
-- [ ] Crear el middleware `requerirSesion`: lee la cookie, verifica el JWT restringido a `HS256`, deja el id en `req.usuarioId` y responde `SESION_INVALIDA` (401) si falta, es inválido o venció — `backend/src/shared/middlewares/requerir-sesion.js`.
-- [ ] Agregar `iniciarSesion` al controller: llama al service, escribe la cookie (`httpOnly`, `sameSite: "lax"`, `secure` según config, `maxAge` de 7 días, `path: "/"`) y responde `200 { usuario }`. Agregar `obtenerSesion`, que responde `200 { usuario }` — `backend/src/modules/auth/auth.controller.js`.
-- [ ] Registrar `POST /login` con `validar(esquemaLogin)` y `GET /yo` con `requerirSesion` — `backend/src/modules/auth/auth.routes.js`.
-- [ ] Montar `cookieParser()` después de `express.json()` y antes de las rutas — `backend/src/app.js`.
-- [ ] Confirmar que `errorHandler` responde `{ codigo, mensaje }` con los códigos nuevos (`CREDENCIALES_INVALIDAS`, `CORREO_NO_VERIFICADO`, `SESION_INVALIDA`) sin necesidad de cambios — `backend/src/shared/middlewares/errorHandler.js`.
+- [x] Crear el middleware `requerirSesion`: lee la cookie, verifica el JWT restringido a `HS256`, deja el id en `req.usuarioId` y responde `SESION_INVALIDA` (401) si falta, es inválido o venció — `backend/src/shared/middlewares/requerir-sesion.js`.
+- [x] Agregar `iniciarSesion` al controller: llama al service, escribe la cookie (`httpOnly`, `sameSite: "lax"`, `secure` según config, `maxAge` de 7 días, `path: "/"`) y responde `200 { usuario }`. Agregar `obtenerSesion`, que responde `200 { usuario }` — `backend/src/modules/auth/auth.controller.js`.
+- [x] Registrar `POST /login` con `validar(esquemaLogin)` y `GET /yo` con `requerirSesion` — `backend/src/modules/auth/auth.routes.js`.
+- [x] Montar `cookieParser()` después de `express.json()` y antes de las rutas — `backend/src/app.js`.
+- [x] Confirmar que `errorHandler` responde `{ codigo, mensaje }` con los códigos nuevos (`CREDENCIALES_INVALIDAS`, `CORREO_NO_VERIFICADO`, `SESION_INVALIDA`) sin necesidad de cambios — `backend/src/shared/middlewares/errorHandler.js`.
 
 ### Frontend
 

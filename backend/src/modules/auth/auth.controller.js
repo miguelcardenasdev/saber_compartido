@@ -1,6 +1,11 @@
-import { registrarUsuario } from "./auth.service.js";
+import {
+  registrarUsuario,
+  iniciarSesion as servicioIniciarSesion,
+  obtenerSesion as servicioObtenerSesion,
+} from "./auth.service.js";
 import { errorNegocio } from "../../shared/errores/error-negocio.js";
 import { buscarPorToken, marcarCorreoVerificado } from "./auth.repository.js";
+import { config } from "../../config/index.js";
 
 export const registrar = async (req, res, next) => {
   try {
@@ -43,6 +48,33 @@ export const verificarCorreo = async (req, res, next) => {
       codigo: "CORREO_VERIFICADO",
       mensaje: "Tu correo quedó verificado. Ya puedes iniciar sesión",
     });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const iniciarSesion = async (req, res, next) => {
+  try {
+    const { token, usuario } = await servicioIniciarSesion(req.body);
+
+    res.cookie(config.sesion.nombreCookie, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: config.sesion.secure,
+      maxAge: config.sesion.duracionSegundos * 1000,
+      path: "/",
+    });
+
+    return res.status(200).json({ usuario });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const obtenerSesion = async (req, res, next) => {
+  try {
+    const usuario = await servicioObtenerSesion(req.usuarioId);
+    return res.status(200).json({ usuario });
   } catch (error) {
     return next(error);
   }
