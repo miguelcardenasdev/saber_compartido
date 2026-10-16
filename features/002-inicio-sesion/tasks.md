@@ -20,11 +20,10 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 
 ### Frontend
 
-- [ ] Hacer commit de lo que haya antes de empezar, para poder volver atrás si la extracción rompe algo.
-- [ ] Extraer el componente `Campo` de `formulario-registro.jsx` a una pieza compartida, sin cambiar su comportamiento — `frontend/src/features/auth/campo.jsx`.
-- [ ] Extraer el layout split (panel de marca `bg-primary-dark` y formulario) de `Registro.jsx` a un componente compartido — `frontend/src/components/layout-auth.jsx`.
-- [ ] Verificar el registro en navegador (envío correcto, error de campo y enlace de verificación) y hacer un commit aparte antes de construir el login encima.
-- [ ] Crear la copia del schema de login para validar en el cliente, con los mismos mensajes que el backend — `frontend/src/features/auth/login.schema.js`.
+- [x] Hacer commit de lo que haya antes de empezar, para poder volver atrás si la extracción rompe algo.
+- [x] Extraer el componente `Campo` de `formulario-registro.jsx` a una pieza compartida, sin cambiar su comportamiento — `frontend/src/features/auth/campo.jsx`.
+- [x] Extraer el layout split (panel de marca `bg-primary-dark` y formulario) de `Registro.jsx` a un componente compartido — `frontend/src/components/layout-auth.jsx`.
+- [x] Crear la copia del schema de login para validar en el cliente, con los mismos mensajes que el backend — `frontend/src/features/auth/login.schema.js`.
 - [ ] Crear los wrappers `fetch` `iniciarSesion(datos)` (`POST /api/auth/login`) y `obtenerSesion()` (`GET /api/auth/yo`), que devuelven datos o lanzan `{ codigo, mensaje, detalle }` como los de la 001 — `frontend/src/features/auth/api-login.js` y `api-sesion.js`.
 - [ ] Crear `AuthContext` y `AuthProvider`: al montar llama a `obtenerSesion` (un 401 deja `usuario` en `null`, no es un error) y expone `usuario`, `cargando` y una función para fijar el usuario tras el login — `frontend/src/features/auth/auth-context.jsx`.
 - [ ] Crear `RutaProtegida`: mientras `cargando` muestra un estado accesible (`role="status"`); sin usuario redirige a `/iniciar-sesion` con `replace`; con usuario renderiza `<Outlet />` — `frontend/src/features/auth/ruta-protegida.jsx`.
