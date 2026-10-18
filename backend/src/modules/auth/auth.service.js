@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { randomBytes } from "node:crypto";
+import { OAuth2Client } from "google-auth-library";
 import { buscarPorCorreo, buscarPorId, crearUsuario } from "./auth.repository.js";
 import { errorNegocio } from "../../shared/errores/error-negocio.js";
 import { enviarCorreoVerificacion } from "../../shared/email/correo.service.js";
@@ -11,6 +12,11 @@ const DURACION_TOKEN_HORAS = 24;
 
 const HASH_RELLENO =
   "$2b$10$TW4DSQH.SfpcaDacuu381O58IteGKSbYdRRIG56BfpQs5k3tSrfjS";
+
+const DOMINIO_CORREO = "@amigo.edu.co";
+const DOMINIO_HD = "amigo.edu.co";
+
+const clienteGoogle = new OAuth2Client({ clientId: config.google.idCliente });
 
 const presentarUsuario = (usuario) => ({
   id: usuario.id,
@@ -109,4 +115,46 @@ export const obtenerSesion = async (usuarioId) => {
   }
 
   return presentarUsuario(usuario);
+};
+
+export const validarIdTokenGoogle = async (idToken) => {
+  let payload;
+  try {
+    const ticket = await clienteGoogle.verifyIdToken({
+      idToken,
+      audience: config.google.idCliente,
+    });
+    payload = ticket.getPayload();
+  } catch {
+    throw errorNegocio(
+      "ERROR_GOOGLE",
+      "No pudimos validar el acceso con Google. Inténtalo de nuevo",
+      401,
+    );
+  }
+
+  const correo = (payload?.email ?? "").toLowerCase();
+  const correoVerificado = payload?.email_verified === true;
+  const hd = payload?.hd;
+  const googleSub = payload?.sub;
+
+  if (
+    !googleSub ||
+    !correoVerificado ||
+    !correo.endsWith(DOMINIO_CORREO) ||
+    hd !== DOMINIO_HD
+  ) {
+    throw errorNegocio(
+      "DOMINIO_NO_PERMITIDO",
+      "Solo se permite el acceso con una cuenta institucional @amigo.edu.co",
+      403,
+    );
+  }
+
+  return {
+    googleSub,
+    correo,
+    nombres: payload.given_name ?? "",
+    apellidos: payload.family_name ?? "",
+  };
 };
