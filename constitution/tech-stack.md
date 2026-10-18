@@ -8,6 +8,7 @@
 - **Tests:** no hay suite formal por el plazo del MVP. En su lugar, cada historia se valida manualmente contra sus criterios de aceptación (ya documentados por historia en el backlog). Si el tiempo alcanza, se agregan tests unitarios solo a lógica crítica sin UI (ej. cálculo de cupos, validación de conflictos de horario) con Vitest — no a todo el proyecto.
 - **Despliegue:** Aplicación completa (backend + frontend) desplegada vía Docker en Railway; base de datos de producción en Aiven, no en Railway. Variable de conexión (`DATABASE_URL`) cambia entre entornos: apunta al contenedor local en desarrollo y a Aiven en producción — el resto del `Dockerfile` no cambia.
 - **Correo de transacción:** Nodemailer + SMTP de Gmail (STARTTLS, puerto 587) — `backend/src/shared/email/`. El envío es **asíncrono**: el `201` de registro no espera al correo; si el envío falla, el error queda en los logs del backend sin afectar al usuario (la feature de "reenviar verificación" queda en el backlog de mantenimiento).
+- **Autenticación:** JWT (`jsonwebtoken`) firmado con **HS256**, entregado en una cookie de sesión **`httpOnly`** (`sesion`) de **7 días**, `SameSite=Lax` y `Secure` solo en producción. `httpOnly` impide que el JavaScript de la página lea o manipule la cookie, por lo que no está expuesta a XSS; el `SameSite=Lax` evita que viaje en peticiones cross-site de tipo POST. El secreto vive en la variable de entorno **`JWT_SECRET`** (obligatoria, mínimo 32 caracteres; se valida al arrancar en `backend/src/config/index.js` y se genera con `node -p "crypto.randomBytes(48).toString('hex')"`). El payload lleva solo `{ sub: <id de usuario> }` — nunca datos del usuario ni la contraseña. El cliente **nunca** recibe el JWT en el cuerpo de la respuesta: solo se guarda en la cookie. Dependencias nuevas: `jsonwebtoken`, `cookie-parser`, `bcrypt`.
 
 ## Archivos / módulos clave
 
@@ -17,12 +18,15 @@
 - `backend/prisma/schema.prisma` — modelo de datos completo del proyecto (archivo compartido, ver Límites duros).
 - `frontend/src/features/<nombre>/` — lógica de negocio del frontend, mapeada 1 a 1 con los módulos del backend.
 - `frontend/src/pages/` — una carpeta por pantalla (Login, Dashboard, BuscarTutores, etc.).
+- `backend/src/shared/middlewares/requerir-sesion.js` — middleware que valida el JWT de la cookie `sesion` y fija `req.usuarioId`; lo usan las rutas protegidas. Responde **401 `SESION_INVALIDA`** con el mismo cuerpo ante cookie ausente, manipulada, vencida o de un usuario ya inexistente.
+- `frontend/src/features/auth/` — `auth-context.jsx` (lee `GET /api/auth/yo` al montar; un 401 deja `usuario` en `null`, no es un error), `ruta-protegida.jsx` (guarda `/dashboard`) y `formulario-login.jsx` (replica el patrón de validación de la 001).
+- **Firma de errores de login:** el backend valida la **contraseña antes que el estado de verificación**. Así, una cuenta no verificada con contraseña incorrecta responde el genérico `CREDENCIALES_INVALIDAS` (401) y no `CORREO_NO_VERIFICADO` (403), evitando que un atacante descubra qué correos tienen cuenta activa. Además usa un hash de relleno (`HASH_RELLENO`) cuando el correo no existe, para que el tiempo de respuesta no delate la existencia de la cuenta.
 
 ## Comandos
 
 - `npm run dev` — arranca el entorno local (backend y frontend por separado, cada uno en su carpeta).
 - `npm test` — no aplica aún; se define si se agregan tests de lógica crítica.
-- `npm run lint` — oxlint.
+- `npm run lint` — **oxlint** (no ESLint). Hoy está configurado y ejecutable **solo en `frontend/`** (`.oxlintrc.json` con los plugins `react` y `oxc`); `backend/` no tiene script ni config de lint todavía, así que sus archivos se revisan con el mismo binario apuntándolo a la carpeta (`oxlint backend/src`). Añadir `lint` al `backend/package.json` queda pendiente de coordinar con el equipo (ver "No agregar dependencias nuevas sin avisar").
 - `npm run build` — compila el frontend para producción (Vite build); el backend en JavaScript plano no necesita paso de build.
 
 ## Modelo de datos / dominio
@@ -30,6 +34,7 @@
 - `usuarios.rol` — `estudiante` | `tutor` | `administrador`. Pasa de `estudiante` a `tutor` automáticamente cuando al menos una fila de `tutores_materias` del usuario llega a `estado = 'aprobado'` (no antes — mientras esté `pendiente`, sigue viéndose como `estudiante`). Esta actualización debe ocurrir en la misma transacción que aprueba al tutor (TUT-VER-001). El frontend usa este campo para habilitar el switch "modo tutor" (DAS-EST-002) — no hay un valor combinado; el usuario conserva su vista de estudiante y además gana acceso a la de tutor.
 - `usuarios.correo_institucional` — debe terminar en `@amigo.edu.co`; se valida en el registro (REG-USR-001).
 - `usuarios.email_verificado`, `usuarios.token_verificacion`, `usuarios.token_expira` — ciclo de verificación de correo (REG-USR-001). La cuenta nace con `email_verificado = 0`; el registro genera un token hexadecimal de 32 bytes con vencimiento de 24 h y envía el enlace `${URL_FRONTEND}/verificar/<token>`. `token_verificacion` es **UNIQUE** en la BD (`uq_usuarios_token_verificacion`) y se conserva después de verificar: el enlace es reutilizable hasta su vencimiento (un segundo clic responde `YA_VERIFICADO`); vencido sin verificar responde `TOKEN_EXPIRADO` y la cuenta sigue inhabilitada. La verificación la resuelve `GET /api/auth/verificar/:token`.
+- **Sesión de usuario:** no hay tabla de sesiones — es **stateless**. La validez la da el JWT de la cookie `sesion` y la comprobación final de que el usuario exista en BD (`GET /api/auth/yo`). Por eso "cerrar sesión" hoy solo podría hacerse borrando la cookie desde el cliente, y una cuenta eliminada sigue teniendo un JWT técnicamente válido hasta que `/yo` la rechace. Cerrar sesión y revocación anticipada quedan en el backlog.
 - `tutores_materias.estado` — `pendiente` | `aprobado` | `rechazado`, por tutor **y por materia** (un tutor puede quedar aprobado en una materia y rechazado en otra). Solo las filas en `aprobado` hacen público al tutor en esa materia y lo hacen visible en búsqueda (BUS-TUT-001).
 - `tutores_materias.promedio_academico` — debe ser ≥ 4.0 para que la IA apruebe la verificación; por debajo de eso, el estado pasa a `rechazado` (TUT-VER-001).
 - `disponibilidad_tutores` — bloques de horario concretos (`fecha` + `hora_inicio` + `hora_fin`), no recurrentes.

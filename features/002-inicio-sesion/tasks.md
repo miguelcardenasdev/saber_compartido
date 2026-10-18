@@ -36,23 +36,23 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 
 ### Pruebas / validación
 
-- [ ] Con `curl`: login con credenciales correctas y cuenta verificada responde 200, trae `Set-Cookie` con `HttpOnly` y el cuerpo no incluye contraseña ni hash.
-- [ ] Con `curl`: contraseña incorrecta y correo inexistente responden 401 con el mismo cuerpo exacto.
-- [ ] Con `curl`: cuenta no verificada con credenciales correctas responde 403 `CORREO_NO_VERIFICADO` y no entrega cookie; con contraseña incorrecta responde 401 `CREDENCIALES_INVALIDAS`.
-- [ ] Con `curl`: correo con formato inválido o campos vacíos responden 400 con `detalle` por campo.
-- [ ] Con `curl`: `GET /api/auth/yo` responde 200 con cookie válida, y 401 sin cookie, con cookie manipulada y con un token ya vencido (firmado con el secreto y `exp` en el pasado).
-- [ ] En el navegador: `/dashboard` sin sesión redirige al login; tras iniciar sesión se ve "Hola, {nombres}"; al recargar se mantiene la sesión.
-- [ ] En el navegador: la cookie aparece como `HttpOnly` en DevTools y `document.cookie` no la devuelve.
-- [ ] En el navegador: los tres casos de error (credenciales inválidas, correo no verificado, campos inválidos) muestran el mensaje correcto, y el enlace entre registro y login funciona en ambos sentidos.
-- [ ] Repetir los chequeos de la 001 (registro 201, 400, 409 y enlace de verificación) para confirmar que no hubo regresión.
-- [ ] Correr `npm run lint` (`oxlint`) en backend y frontend sin errores.
+- [x] Con `curl`: login con credenciales correctas y cuenta verificada responde 200, trae `Set-Cookie` con `HttpOnly` y el cuerpo no incluye contraseña ni hash.
+- [x] Con `curl`: contraseña incorrecta y correo inexistente responden 401 con el mismo cuerpo exacto.
+- [x] Con `curl`: cuenta no verificada con credenciales correctas responde 403 `CORREO_NO_VERIFICADO` y no entrega cookie; con contraseña incorrecta responde 401 `CREDENCIALES_INVALIDAS`.
+- [x] Con `curl`: correo con formato inválido o campos vacíos responden 400 con `detalle` por campo.
+- [x] Con `curl`: `GET /api/auth/yo` responde 200 con cookie válida, y 401 sin cookie, con cookie manipulada y con un token ya vencido (firmado con el secreto y `exp` en el pasado).
+- [x] En el navegador: `/dashboard` sin sesión redirige al login; tras iniciar sesión se ve "Hola, {nombres}"; al recargar se mantiene la sesión.
+- [x] En el navegador: la cookie aparece como `HttpOnly` en DevTools y `document.cookie` no la devuelve.
+- [x] En el navegador: los tres casos de error (credenciales inválidas, correo no verificado, campos inválidos) muestran el mensaje correcto, y el enlace entre registro y login funciona en ambos sentidos.
+- [x] Repetir los chequeos de la 001 (registro 201, 400, 409 y enlace de verificación) para confirmar que no hubo regresión.
+- [x] Correr `npm run lint` (`oxlint`) en backend y frontend sin errores.
 
 ### Cierre
 
-- [ ] Actualizar `tech-stack.md` con la sesión por JWT en cookie `httpOnly`, la variable `JWT_SECRET`, las dependencias nuevas y la corrección de que el lint es `oxlint`.
-- [ ] Validar contra los criterios de aceptación de `spec.md`.
-- [ ] Mover la feature a "Hecho" en `../../constitution/roadmap.md`.
-- [ ] Agregar al Backlog/ideas del roadmap lo que el spec dejó fuera: reenvío del correo de verificación, recuperación de contraseña, límite de intentos y cerrar sesión.
+- [x] Actualizar `tech-stack.md` con la sesión por JWT en cookie `httpOnly`, la variable `JWT_SECRET`, las dependencias nuevas y la corrección de que el lint es `oxlint`.
+- [x] Validar contra los criterios de aceptación de `spec.md`.
+- [x] Mover la feature a "Hecho" en `../../constitution/roadmap.md`.
+- [x] Agregar al Backlog/ideas del roadmap lo que el spec dejó fuera: reenvío del correo de verificación, recuperación de contraseña, límite de intentos y cerrar sesión.
 
 ## Mantenimiento (checklist recurrente)
 

@@ -3,10 +3,11 @@
 ## Hecho ✅
 
 1. **001 · Registro con correo institucional** — permite que un estudiante cree su cuenta con correo institucional y quede habilitado tras verificarla (REG-USR-001).
+2. **002 · Inicio de sesión** — autenticación con correo y contraseña; abre una sesión de 7 días en cookie `httpOnly`, bloquea el acceso si el correo no está verificado y protege `/dashboard` (REG-USR-002).
 
 ## Siguiente 🔜
 
-2. **002 · Inicio de sesión** — autenticación con correo y contraseña; bloquea el acceso si el correo no está verificado (REG-USR-002).
+_Por definir — elegir la siguiente entrada del backlog con el equipo._
 
 ## Backlog / ideas 💡
 
@@ -25,5 +26,12 @@ _Orden aproximado según lo definido en tech-stack.md (por épicas y dependencia
 - **Crear sesión grupal** — el tutor abre una sesión con cupo limitado (GRU-TUT-001).
 - **Inscripción a sesión grupal** — un estudiante se inscribe respetando el cupo disponible (GRU-INS-001).
 - **(fase futura) Panel de administración completo** — reportes y gestión general de usuarios; hoy el rol admin solo verifica tutores.
+
+_De la 002 (quedaron fuera de su alcance):_
+
+- **Reenviar correo de verificación** — reutiliza `correo.service.js`; permite al usuario con cuenta no verificada pedir un enlace nuevo desde el propio aviso de login (el token de 24 h ya existe, solo falta la UI y el endpoint).
+- **Recuperar / cambiar contraseña** — requiere definir el flujo de recuperación por correo y una regla de fortaleza coherente con la del registro.
+- **Límite de intentos fallidos** — protección anti fuerza bruta; no está definida en ninguna historia de usuario todavía.
+- **Cerrar sesión** — no figura en ninguna historia de usuario; además la sesión es stateless, así que habría que decidir si basta con borrar la cookie o se necesita revocación real (ver "Sesión de usuario" en `tech-stack.md`).
 
 > Cada feature nueva se crea como `features/NNN-nombre-feature/` con `spec.md`, `plan.md` y `tasks.md` antes de tocar código.
