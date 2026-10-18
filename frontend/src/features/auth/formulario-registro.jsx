@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { esquemaRegistro } from "./registro.schema.js";
 import { registrarCuenta } from "./api-registro.js";
 import { Campo } from "./campo.jsx";
@@ -184,12 +185,12 @@ export const FormularioRegistro = () => {
 
       <p className="text-center text-sm text-text-muted">
         ¿Ya tienes cuenta?{" "}
-        <a
-          href="#"
+        <Link
+          to="/iniciar-sesion"
           className="font-medium text-primary transition-colors hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
         >
           Inicia sesión
-        </a>
+        </Link>
       </p>
     </form>
   );

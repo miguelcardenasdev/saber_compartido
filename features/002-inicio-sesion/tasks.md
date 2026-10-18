@@ -31,8 +31,8 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 - [x] Crear la pantalla de inicio de sesión con el layout compartido y un enlace de regreso al registro — `frontend/src/pages/Login/Login.jsx`.
 - [x] Crear el dashboard mínimo que muestra "Hola, {nombres}" — `frontend/src/pages/Dashboard/Dashboard.jsx`.
 - [x] Envolver las rutas en `AuthProvider` y registrar `/iniciar-sesion` y `/dashboard` (esta dentro de `RutaProtegida`) — `frontend/src/App.jsx`.
-- [ ] Cambiar el `href="#"` de "Inicia sesión" por un `Link` a `/iniciar-sesion` — `frontend/src/features/auth/formulario-registro.jsx`.
-- [ ] Verificar que la pantalla de login sea usable en móvil (mobile-first) y mantenga los tokens, tipografías y layout del registro.
+- [x] Cambiar el `href="#"` de "Inicia sesión" por un `Link` a `/iniciar-sesion` — `frontend/src/features/auth/formulario-registro.jsx`.
+- [x] Verificar que la pantalla de login sea usable en móvil (mobile-first) y mantenga los tokens, tipografías y layout del registro.
 
 ### Pruebas / validación
 
