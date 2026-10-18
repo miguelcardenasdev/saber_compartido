@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { esquemaLogin } from "./login.schema.js";
 import { iniciarSesion } from "./api-login.js";
 import { useAuth } from "./auth-context.jsx";
@@ -139,6 +139,16 @@ export const FormularioLogin = () => {
       >
         {cargando ? "Iniciando sesión…" : "Iniciar sesión"}
       </button>
+
+      <p className="text-center text-sm text-text-muted">
+        ¿No tienes cuenta?{" "}
+        <Link
+          to="/"
+          className="font-medium text-primary transition-colors hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
+        >
+          Regístrate
+        </Link>
+      </p>
     </form>
   );
 };
