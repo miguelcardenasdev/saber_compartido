@@ -29,8 +29,8 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 - [x] Crear `RutaProtegida`: mientras `cargando` muestra un estado accesible (`role="status"`); sin usuario redirige a `/iniciar-sesion` con `replace`; con usuario renderiza `<Outlet />` — `frontend/src/features/auth/ruta-protegida.jsx`.
 - [x] Crear el formulario de login con el patrón de la 001 (`noValidate`, `role="alert"`, `aria-invalid`, validación al salir del campo y al corregir, estados `idle/cargando/error`, botón deshabilitado mientras envía). Los errores de campo van bajo cada input; `CREDENCIALES_INVALIDAS` y `CORREO_NO_VERIFICADO` se muestran en un aviso general. Al tener éxito fija el usuario y navega a `/dashboard` con `replace` — `frontend/src/features/auth/formulario-login.jsx`.
 - [x] Crear la pantalla de inicio de sesión con el layout compartido y un enlace de regreso al registro — `frontend/src/pages/Login/Login.jsx`.
-- [ ] Crear el dashboard mínimo que muestra "Hola, {nombres}" — `frontend/src/pages/Dashboard/Dashboard.jsx`.
-- [ ] Envolver las rutas en `AuthProvider` y registrar `/iniciar-sesion` y `/dashboard` (esta dentro de `RutaProtegida`) — `frontend/src/App.jsx`.
+- [x] Crear el dashboard mínimo que muestra "Hola, {nombres}" — `frontend/src/pages/Dashboard/Dashboard.jsx`.
+- [x] Envolver las rutas en `AuthProvider` y registrar `/iniciar-sesion` y `/dashboard` (esta dentro de `RutaProtegida`) — `frontend/src/App.jsx`.
 - [ ] Cambiar el `href="#"` de "Inicia sesión" por un `Link` a `/iniciar-sesion` — `frontend/src/features/auth/formulario-registro.jsx`.
 - [ ] Verificar que la pantalla de login sea usable en móvil (mobile-first) y mantenga los tokens, tipografías y layout del registro.
 
