@@ -18,6 +18,12 @@ export const buscarPorToken = async (token) => {
   });
 };
 
+export const buscarPorGoogleSub = async (googleSub) => {
+  return prisma.usuarios.findUnique({
+    where: { googleSub },
+  });
+};
+
 export const crearUsuario = async ({
   nombres,
   apellidos,
@@ -34,6 +40,37 @@ export const crearUsuario = async ({
       contrasenaHash,
       tokenVerificacion,
       tokenExpira,
+    },
+  });
+};
+
+export const crearUsuarioGoogle = async ({
+  nombres,
+  apellidos,
+  correoInstitucional,
+  googleSub,
+}) => {
+  return prisma.usuarios.create({
+    data: {
+      nombres,
+      apellidos,
+      correoInstitucional,
+      googleSub,
+      emailVerificado: true,
+    },
+  });
+};
+
+export const vincularGoogle = async (id, { googleSub, sinPassword = false }) => {
+  return prisma.usuarios.update({
+    where: { id },
+    data: {
+      googleSub,
+      ...(sinPassword && {
+        contrasenaHash: null,
+        tokenVerificacion: null,
+        tokenExpira: null,
+      }),
     },
   });
 };

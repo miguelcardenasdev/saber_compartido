@@ -5,7 +5,7 @@ import {
 } from "./auth.service.js";
 import { errorNegocio } from "../../shared/errores/error-negocio.js";
 import { buscarPorToken, marcarCorreoVerificado } from "./auth.repository.js";
-import { config } from "../../config/index.js";
+import { emitirSesion } from "../../shared/auth/emitir-sesion.js";
 
 export const registrar = async (req, res, next) => {
   try {
@@ -57,13 +57,7 @@ export const iniciarSesion = async (req, res, next) => {
   try {
     const { token, usuario } = await servicioIniciarSesion(req.body);
 
-    res.cookie(config.sesion.nombreCookie, token, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: config.sesion.secure,
-      maxAge: config.sesion.duracionSegundos * 1000,
-      path: "/",
-    });
+    emitirSesion(res, token);
 
     return res.status(200).json({ usuario });
   } catch (error) {
