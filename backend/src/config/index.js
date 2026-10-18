@@ -9,6 +9,17 @@ if (CLAVE_SESION.length < 32) {
   );
 }
 
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID ?? "";
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET ?? "";
+const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI ?? "";
+
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !GOOGLE_REDIRECT_URI) {
+  throw new Error(
+    "GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET y GOOGLE_REDIRECT_URI son obligatorias. " +
+      "Cópialas desde .env.template a .env con las credenciales de Google Cloud.",
+  );
+}
+
 export const config = {
   puerto: Number(process.env.PORT ?? 3000),
   urlBaseDatos: process.env.DATABASE_URL,
@@ -25,6 +36,11 @@ export const config = {
     duracionSegundos: 7 * 24 * 60 * 60,
     nombreCookie: "sesion",
     secure: process.env.NODE_ENV === "production",
+  },
+  google: {
+    idCliente: GOOGLE_CLIENT_ID,
+    secretoCliente: GOOGLE_CLIENT_SECRET,
+    uriRedireccion: GOOGLE_REDIRECT_URI,
   },
 };
 

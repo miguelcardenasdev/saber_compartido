@@ -22,7 +22,7 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 ### Backend
 
 - [x] Anunciar al equipo e instalar la dependencia nueva `google-auth-library` — `backend/package.json`.
-- [ ] Agregar la configuración de OAuth (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI`) y hacer que el servidor no arranque si alguna falta. Las tres variables ya están en `.env.template` — `backend/src/config/index.js`.
+- [x] Agregar la configuración de OAuth (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI`) y hacer que el servidor no arranque si alguna falta. Las tres variables ya están en `.env.template` — `backend/src/config/index.js`.
 - [ ] Extraer la emisión de la cookie desde el controller a un helper compartido, para que la usen el login por contraseña y el de Google sin duplicar el código. Debe mantener el comportamiento exacto actual (`httpOnly`, `sameSite: "lax"`, `secure` según config, `maxAge` de 7 días, `path: "/"`) — `backend/src/shared/auth/emitir-sesion.js` (nuevo) y `backend/src/modules/auth/auth.controller.js`.
 - [ ] Agregar al repository: `buscarPorGoogleSub()`, la creación de cuenta desde Google (rol `estudiante`, `emailVerificado` en `true`, sin `tokenVerificacion` ni `tokenExpira`) y la actualización que guarda `googleSub` al vincular — `backend/src/modules/auth/auth.repository.js`.
 - [ ] Implementar en el service la validación del ID token de Google y las **tres** comprobaciones de dominio, todas en el servidor: `email_verified`, correo terminado en `@amigo.edu.co` y `hd` igual a `amigo.edu.co`. Si alguna falla, `DOMINIO_NO_PERMITIDO` — `backend/src/modules/auth/auth.service.js`.
