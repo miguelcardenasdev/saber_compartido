@@ -7,7 +7,7 @@
 
 ## Siguiente 🔜
 
-_Por definir — elegir la siguiente entrada del backlog con el equipo._
+3. **003 · Registro e inicio de sesión con Google** — botón "Continuar con Google" en el registro y el login; solo acepta cuentas `@amigo.edu.co`, crea la cuenta si no existe y abre la misma sesión de 7 días de la 002 (REG-USR-003).
 
 ## Backlog / ideas 💡
 
