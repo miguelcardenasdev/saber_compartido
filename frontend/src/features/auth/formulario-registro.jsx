@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { esquemaRegistro } from "./registro.schema.js";
 import { registrarCuenta } from "./api-registro.js";
 import { Campo } from "./campo.jsx";
+import { BotonGoogle } from "./boton-google.jsx";
 
 const leerDatos = (formulario) => Object.fromEntries(new FormData(formulario));
 
@@ -182,6 +183,14 @@ export const FormularioRegistro = () => {
       >
         {cargando ? "Creando cuenta…" : "Crear cuenta"}
       </button>
+
+      <div className="flex items-center gap-3 text-sm text-text-muted">
+        <span className="h-px flex-1 bg-border" aria-hidden="true" />
+        <span>o</span>
+        <span className="h-px flex-1 bg-border" aria-hidden="true" />
+      </div>
+
+      <BotonGoogle />
 
       <p className="text-center text-sm text-text-muted">
         ¿Ya tienes cuenta?{" "}
