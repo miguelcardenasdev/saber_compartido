@@ -36,8 +36,8 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 ### Frontend
 
 - [x] Agregar el botón "Continuar con Google" al formulario de registro, con el mismo patrón de estados (`idle/cargando/error`, deshabilitado mientras navega) y los tokens de `tech-stack.md` — `frontend/src/features/auth/formulario-registro.jsx`.
-- [ ] Agregar el mismo botón al formulario de inicio de sesión — `frontend/src/features/auth/formulario-login.jsx`.
-- [ ] Hacer que el botón navegue a `GET /api/auth/google` (es una navegación del navegador, no un `fetch`, porque el backend responde con un redirect) — `frontend/src/features/auth/`.
+- [x] Agregar el mismo botón al formulario de inicio de sesión — `frontend/src/features/auth/formulario-login.jsx`.
+- [x] Hacer que el botón navegue a `GET /api/auth/google` (es una navegación del navegador, no un `fetch`, porque el backend responde con un redirect) — `frontend/src/features/auth/`.
 - [ ] Leer el parámetro `?error=` de la URL en la pantalla de inicio de sesión y mostrarlo en el aviso general que ya existe (`role="alert"`, `bg-danger/10`), con un mensaje en español por cada código; después limpiar el parámetro de la URL para que no reaparezca al recargar — `frontend/src/features/auth/formulario-login.jsx` o `frontend/src/pages/Login/Login.jsx`.
 - [ ] Confirmar que el `AuthProvider` no necesita cambios: cuando el backend redirige al dashboard con la cookie puesta, `GET /api/auth/yo` ya devuelve el usuario — `frontend/src/features/auth/auth-context.jsx`.
 

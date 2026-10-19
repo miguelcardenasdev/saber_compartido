@@ -4,6 +4,7 @@ import { esquemaLogin } from "./login.schema.js";
 import { iniciarSesion } from "./api-login.js";
 import { useAuth } from "./auth-context.jsx";
 import { Campo } from "./campo.jsx";
+import { BotonGoogle } from "./boton-google.jsx";
 
 const leerDatos = (formulario) => Object.fromEntries(new FormData(formulario));
 
@@ -139,6 +140,14 @@ export const FormularioLogin = () => {
       >
         {cargando ? "Iniciando sesión…" : "Iniciar sesión"}
       </button>
+
+      <div className="flex items-center gap-3 text-sm text-text-muted">
+        <span className="h-px flex-1 bg-border" aria-hidden="true" />
+        <span>o</span>
+        <span className="h-px flex-1 bg-border" aria-hidden="true" />
+      </div>
+
+      <BotonGoogle />
 
       <p className="text-center text-sm text-text-muted">
         ¿No tienes cuenta?{" "}
