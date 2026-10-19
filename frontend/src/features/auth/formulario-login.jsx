@@ -1,10 +1,18 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { esquemaLogin } from "./login.schema.js";
 import { iniciarSesion } from "./api-login.js";
 import { useAuth } from "./auth-context.jsx";
 import { Campo } from "./campo.jsx";
 import { BotonGoogle } from "./boton-google.jsx";
+
+const MENSAJES_ERROR_GOOGLE = {
+  DOMINIO_NO_PERMITIDO:
+    "Ese acceso no está permitido: solo cuentas institucionales @amigo.edu.co.",
+  ACCESO_CANCELADO:
+    "No se completó el acceso con Google. Puedes intentarlo de nuevo o iniciar sesión con tu contraseña.",
+  ERROR_GOOGLE: "No pudimos iniciar sesión con Google. Inténtalo de nuevo.",
+};
 
 const leerDatos = (formulario) => Object.fromEntries(new FormData(formulario));
 
@@ -32,10 +40,24 @@ const erroresDeDetalle = (detalle) => {
 export const FormularioLogin = () => {
   const navigate = useNavigate();
   const { fijarUsuario } = useAuth();
+  const [parametros, setParametros] = useSearchParams();
+  const codigoErrorGoogle = parametros.get("error");
 
   const [errores, setErrores] = useState({});
-  const [aviso, setAviso] = useState("");
+  const [aviso, setAviso] = useState(() =>
+    codigoErrorGoogle
+      ? (MENSAJES_ERROR_GOOGLE[codigoErrorGoogle] ??
+        MENSAJES_ERROR_GOOGLE.ERROR_GOOGLE)
+      : "",
+  );
   const [estado, setEstado] = useState("idle");
+
+  useEffect(() => {
+    if (!codigoErrorGoogle) return;
+    const limpios = new URLSearchParams(parametros);
+    limpios.delete("error");
+    setParametros(limpios, { replace: true });
+  }, [codigoErrorGoogle, parametros, setParametros]);
 
   const manejarEnvio = async (event) => {
     event.preventDefault();
