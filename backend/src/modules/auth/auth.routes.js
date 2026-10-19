@@ -4,6 +4,8 @@ import {
   verificarCorreo,
   iniciarSesion,
   obtenerSesion,
+  iniciarGoogle,
+  callbackGoogle,
 } from "./auth.controller.js";
 import { validar } from "../../shared/middlewares/validar.js";
 import { requerirSesion } from "../../shared/middlewares/requerir-sesion.js";
@@ -16,5 +18,7 @@ router.post("/registro", validar(esquemaRegistro), registrar);
 router.get("/verificar/:token", verificarCorreo);
 router.post("/login", validar(esquemaLogin), iniciarSesion);
 router.get("/yo", requerirSesion, obtenerSesion);
+router.get("/google", iniciarGoogle);
+router.get("/google/callback", callbackGoogle);
 
 export default router;

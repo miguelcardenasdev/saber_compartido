@@ -33,6 +33,12 @@ const presentarUsuario = (usuario) => ({
   rol: usuario.rol,
 });
 
+const firmarTokenSesion = (usuarioId) =>
+  jwt.sign({ sub: usuarioId }, config.sesion.secreto, {
+    algorithm: "HS256",
+    expiresIn: config.sesion.duracionSegundos,
+  });
+
 export const registrarUsuario = async ({ nombres, apellidos, correo, contrasena }) => {
   const existente = await buscarPorCorreo(correo);
   if (existente) {
@@ -99,13 +105,8 @@ export const iniciarSesion = async ({ correo, contrasena }) => {
     );
   }
 
-  const token = jwt.sign({ sub: usuario.id }, config.sesion.secreto, {
-    algorithm: "HS256",
-    expiresIn: config.sesion.duracionSegundos,
-  });
-
   return {
-    token,
+    token: firmarTokenSesion(usuario.id),
     usuario: presentarUsuario(usuario),
   };
 };
@@ -184,4 +185,31 @@ export const resolverCuentaGoogle = async ({ googleSub, correo, nombres, apellid
     correoInstitucional: correo,
     googleSub,
   });
+};
+
+export const canjearCodigoGoogle = async ({ code, codeVerifier }) => {
+  try {
+    const { tokens } = await clienteGoogle.getToken({
+      code,
+      codeVerifier,
+      redirectUri: config.google.uriRedireccion,
+    });
+    return tokens.id_token;
+  } catch {
+    throw errorNegocio(
+      "ERROR_GOOGLE",
+      "No pudimos validar el acceso con Google. Inténtalo de nuevo",
+      401,
+    );
+  }
+};
+
+export const iniciarSesionConGoogle = async (idToken) => {
+  const datos = await validarIdTokenGoogle(idToken);
+  const usuario = await resolverCuentaGoogle(datos);
+
+  return {
+    token: firmarTokenSesion(usuario.id),
+    usuario: presentarUsuario(usuario),
+  };
 };
