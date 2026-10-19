@@ -2,7 +2,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { randomBytes } from "node:crypto";
 import { OAuth2Client } from "google-auth-library";
-import { buscarPorCorreo, buscarPorId, crearUsuario } from "./auth.repository.js";
+import {
+  buscarPorCorreo,
+  buscarPorId,
+  buscarPorGoogleSub,
+  crearUsuario,
+  crearUsuarioGoogle,
+  vincularGoogle,
+} from "./auth.repository.js";
 import { errorNegocio } from "../../shared/errores/error-negocio.js";
 import { enviarCorreoVerificacion } from "../../shared/email/correo.service.js";
 import { config } from "../../config/index.js";
@@ -157,4 +164,24 @@ export const validarIdTokenGoogle = async (idToken) => {
     nombres: payload.given_name ?? "",
     apellidos: payload.family_name ?? "",
   };
+};
+
+export const resolverCuentaGoogle = async ({ googleSub, correo, nombres, apellidos }) => {
+  const porGoogle = await buscarPorGoogleSub(googleSub);
+  if (porGoogle) return porGoogle;
+
+  const porCorreo = await buscarPorCorreo(correo);
+  if (porCorreo) {
+    return vincularGoogle(porCorreo.id, {
+      googleSub,
+      sinPassword: !porCorreo.emailVerificado,
+    });
+  }
+
+  return crearUsuarioGoogle({
+    nombres,
+    apellidos,
+    correoInstitucional: correo,
+    googleSub,
+  });
 };
