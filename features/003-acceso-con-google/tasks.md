@@ -43,19 +43,19 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 
 ### Pruebas / validación
 
-- [ ] Con `curl`: una cuenta de Google con correo personal (no `@amigo.edu.co`) es rechazada con `DOMINIO_NO_PERMITIDO` y no se crea sesión.
-- [ ] Con `curl` o con la cookie en mano: una cuenta creada por Google no puede iniciar sesión con contraseña y recibe el mismo 401 genérico de credenciales inválidas, sin ninguna pista de que se debe a que usa Google.
-- [ ] Vincular una cuenta existente **no verificada**: después de la vinculación, su contraseña ya no funciona y su token de verificación quedó borrado.
-- [ ] Vincular una cuenta existente **verificada**: después de la vinculación, su contraseña sigue funcionando y puede entrar por cualquiera de los dos métodos.
-- [ ] Confirmar que al vincular no se crea una cuenta duplicada ni se responde "correo ya registrado".
-- [ ] En el navegador: el flujo completo con una cuenta `@amigo.edu.co` lleva del botón al selector de Google y de vuelta al dashboard con "Hola, {nombres}"; al recargar `/dashboard` la sesión se mantiene.
-- [ ] En el navegador: cancelar el consentimiento de Google vuelve al login con el mensaje correspondiente y sin sesión.
-- [ ] En el navegador: un `state` manipulado o vencido vuelve al login con mensaje genérico y sin sesión.
-- [ ] Confirmar que la cookie emitida por Google es la misma de la 002: `httpOnly`, de 7 días, invisible para `document.cookie`.
-- [ ] Repetir los chequeos de la 002 (login correcto, pass mala y correo inexistente con respuesta idéntica, `/yo` con y sin cookie) para confirmar que `contrasena_hash` nullable no rompió nada.
-- [ ] Repetir los chequeos de la 001 (registro 201, 409, 400 y enlace de verificación) para confirmar que no hubo regresión.
-- [ ] Verificar que la pantalla con el botón de Google sea usable en móvil y mantenga la identidad visual del registro.
-- [ ] Correr `npm run lint` (`oxlint`) en frontend sin errores.
+- [x] Con `curl`: una cuenta de Google con correo personal (no `@amigo.edu.co`) es rechazada con `DOMINIO_NO_PERMITIDO` y no se crea sesión.
+- [x] Con `curl` o con la cookie en mano: una cuenta creada por Google no puede iniciar sesión con contraseña y recibe el mismo 401 genérico de credenciales inválidas, sin ninguna pista de que se debe a que usa Google.
+- [x] Vincular una cuenta existente **no verificada**: después de la vinculación, su contraseña ya no funciona y su token de verificación quedó borrado.
+- [x] Vincular una cuenta existente **verificada**: después de la vinculación, su contraseña sigue funcionando y puede entrar por cualquiera de los dos métodos.
+- [x] Confirmar que al vincular no se crea una cuenta duplicada ni se responde "correo ya registrado".
+- [x] En el navegador: el flujo completo con una cuenta `@amigo.edu.co` lleva del botón al selector de Google y de vuelta al dashboard con "Hola, {nombres}"; al recargar `/dashboard` la sesión se mantiene.
+- [x] En el navegador: cancelar el consentimiento de Google vuelve al login con el mensaje correspondiente y sin sesión.
+- [x] En el navegador: un `state` manipulado o vencido vuelve al login con mensaje genérico y sin sesión.
+- [x] Confirmar que la cookie emitida por Google es la misma de la 002: `httpOnly`, de 7 días, invisible para `document.cookie`.
+- [x] Repetir los chequeos de la 002 (login correcto, pass mala y correo inexistente con respuesta idéntica, `/yo` con y sin cookie) para confirmar que `contrasena_hash` nullable no rompió nada.
+- [x] Repetir los chequeos de la 001 (registro 201, 409, 400 y enlace de verificación) para confirmar que no hubo regresión.
+- [x] Verificar que la pantalla con el botón de Google sea usable en móvil y mantenga la identidad visual del registro.
+- [x] Correr `npm run lint` (`oxlint`) en frontend sin errores.
 
 ### Cierre
 
