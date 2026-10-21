@@ -23,7 +23,11 @@ const HASH_RELLENO =
 const DOMINIO_CORREO = "@amigo.edu.co";
 const DOMINIO_HD = "amigo.edu.co";
 
-const clienteGoogle = new OAuth2Client({ clientId: config.google.idCliente });
+const clienteGoogle = new OAuth2Client({
+  clientId: config.google.idCliente,
+  clientSecret: config.google.secretoCliente,
+  redirectUri: config.google.uriRedireccion,
+});
 
 const presentarUsuario = (usuario) => ({
   id: usuario.id,

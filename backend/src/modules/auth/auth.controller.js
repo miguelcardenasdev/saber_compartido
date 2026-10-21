@@ -164,6 +164,7 @@ export const callbackGoogle = async (req, res) => {
     emitirSesion(res, token);
     return res.redirect(`${config.urlFrontend}/dashboard`);
   } catch (error) {
+    console.error("Fallo el callback de Google:", error);
     const codigo = [
       "DOMINIO_NO_PERMITIDO",
       "ACCESO_CANCELADO",
