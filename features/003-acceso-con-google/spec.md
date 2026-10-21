@@ -16,19 +16,19 @@ Conectar esa identidad existente elimina la fricción del registro sin aflojar l
 
 ## Criterios de aceptación
 
-- [ ] Un estudiante que pulsa "Continuar con Google" en el registro o en el inicio de sesión llega al selector de cuentas de Google y, al elegir una cuenta `@amigo.edu.co` autorizada, queda con sesión abierta y es redirigido al dashboard.
-- [ ] La sesión que abre es indistinguible de la de la 002: cookie `httpOnly` de 7 días, y al recargar `/dashboard` el estudiante sigue autenticado y ve su nombre.
-- [ ] Si la cuenta de Google todavía no existe en Saber Compartido, se crea automáticamente en el mismo momento, sin pedirle datos adicionales y sin enviarle el correo de verificación (Google ya lo verificó).
-- [ ] Si ya existe una cuenta con ese correo, la vinculación la reutiliza: no se crea una cuenta duplicada ni se rechaza el acceso por "correo ya registrado".
-- [ ] Si esa cuenta existente no estaba verificada, la vinculación elimina su contraseña y su token de verificación: quien la tenía pierde el acceso por contraseña y desde ese momento solo puede entrar con Google. (Sin esta regla, alguien que hubiera registrado el correo de otra persona con una contraseña propia conservaría el acceso después de la vinculación.)
-- [ ] Si esa cuenta existente sí estaba verificada, conserva su contraseña y puede entrar indistintamente con Google o con su contraseña.
-- [ ] Una cuenta que entró (o fue creada) por Google no puede iniciar sesión con contraseña: al intentarlo ve el mismo mensaje genérico de credenciales inválidas que cualquier otro fallo, sin revelar que se debe a que la cuenta usa Google.
-- [ ] Una cuenta de Google personal, que no pertenezca al dominio institucional, es rechazada con un mensaje claro: no se crea cuenta ni se abre sesión.
-- [ ] Si el estudiante cancela o cierra el consentimiento de Google, vuelve a la pantalla de inicio de sesión con un mensaje que explica que no se completó el acceso, y no queda con sesión.
-- [ ] Si el acceso falla por cualquier otro motivo (error de Google, enlace manipulado o expirado), el estudiante vuelve a la pantalla de inicio de sesión con un mensaje genérico y sin sesión abierta.
-- [ ] Mientras Google procesa el acceso, el botón muestra un estado de carga y queda deshabilitado, del mismo modo que el formulario de la 002, para evitar activaciones duplicadas.
-- [ ] El botón "Continuar con Google" aparece en ambas pantallas —registro e inicio de sesión—, respeta la identidad visual y los tokens de `tech-stack.md` y es usable en móvil.
-- [ ] El registro con contraseña de la 001 y el inicio de sesión con contraseña de la 002 siguen funcionando exactamente igual que antes de esta feature.
+- [x] Un estudiante que pulsa "Continuar con Google" en el registro o en el inicio de sesión llega al selector de cuentas de Google y, al elegir una cuenta `@amigo.edu.co` autorizada, queda con sesión abierta y es redirigido al dashboard.
+- [x] La sesión que abre es indistinguible de la de la 002: cookie `httpOnly` de 7 días, y al recargar `/dashboard` el estudiante sigue autenticado y ve su nombre.
+- [x] Si la cuenta de Google todavía no existe en Saber Compartido, se crea automáticamente en el mismo momento, sin pedirle datos adicionales y sin enviarle el correo de verificación (Google ya lo verificó).
+- [x] Si ya existe una cuenta con ese correo, la vinculación la reutiliza: no se crea una cuenta duplicada ni se rechaza el acceso por "correo ya registrado".
+- [x] Si esa cuenta existente no estaba verificada, la vinculación elimina su contraseña y su token de verificación: quien la tenía pierde el acceso por contraseña y desde ese momento solo puede entrar con Google. (Sin esta regla, alguien que hubiera registrado el correo de otra persona con una contraseña propia conservaría el acceso después de la vinculación.)
+- [x] Si esa cuenta existente sí estaba verificada, conserva su contraseña y puede entrar indistintamente con Google o con su contraseña.
+- [x] Una cuenta que entró (o fue creada) por Google no puede iniciar sesión con contraseña: al intentarlo ve el mismo mensaje genérico de credenciales inválidas que cualquier otro fallo, sin revelar que se debe a que la cuenta usa Google.
+- [x] Una cuenta de Google personal, que no pertenezca al dominio institucional, es rechazada con un mensaje claro: no se crea cuenta ni se abre sesión.
+- [x] Si el estudiante cancela o cierra el consentimiento de Google, vuelve a la pantalla de inicio de sesión con un mensaje que explica que no se completó el acceso, y no queda con sesión.
+- [x] Si el acceso falla por cualquier otro motivo (error de Google, enlace manipulado o expirado), el estudiante vuelve a la pantalla de inicio de sesión con un mensaje genérico y sin sesión abierta.
+- [x] Mientras Google procesa el acceso, el botón muestra un estado de carga y queda deshabilitado, del mismo modo que el formulario de la 002, para evitar activaciones duplicadas.
+- [x] El botón "Continuar con Google" aparece en ambas pantallas —registro e inicio de sesión—, respeta la identidad visual y los tokens de `tech-stack.md` y es usable en móvil.
+- [x] El registro con contraseña de la 001 y el inicio de sesión con contraseña de la 002 siguen funcionando exactamente igual que antes de esta feature.
 
 ## Fuera de alcance
 
