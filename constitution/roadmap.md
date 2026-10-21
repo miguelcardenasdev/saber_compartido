@@ -4,10 +4,11 @@
 
 1. **001 · Registro con correo institucional** — permite que un estudiante cree su cuenta con correo institucional y quede habilitado tras verificarla (REG-USR-001).
 2. **002 · Inicio de sesión** — autenticación con correo y contraseña; abre una sesión de 7 días en cookie `httpOnly`, bloquea el acceso si el correo no está verificado y protege `/dashboard` (REG-USR-002).
+3. **003 · Registro e inicio de sesión con Google** — botón "Continuar con Google" en el registro y el login; solo acepta cuentas `@amigo.edu.co`, crea la cuenta si no existe, vincula si ya existe y abre la misma sesión de 7 días de la 002 (REG-USR-003). La pantalla de consentimiento queda en modo Testing hasta el despliegue (usa la URL pública para publicarla).
 
 ## Siguiente 🔜
 
-3. **003 · Registro e inicio de sesión con Google** — botón "Continuar con Google" en el registro y el login; solo acepta cuentas `@amigo.edu.co`, crea la cuenta si no existe y abre la misma sesión de 7 días de la 002 (REG-USR-003).
+_Por definir — la siguiente entrada se concreta cuando su spec esté lista (ver Backlog)._
 
 ## Backlog / ideas 💡
 
@@ -33,5 +34,12 @@ _De la 002 (quedaron fuera de su alcance):_
 - **Recuperar / cambiar contraseña** — requiere definir el flujo de recuperación por correo y una regla de fortaleza coherente con la del registro.
 - **Límite de intentos fallidos** — protección anti fuerza bruta; no está definida en ninguna historia de usuario todavía.
 - **Cerrar sesión** — no figura en ninguna historia de usuario; además la sesión es stateless, así que habría que decidir si basta con borrar la cookie o se necesita revocación real (ver "Sesión de usuario" en `tech-stack.md`).
+
+_De la 003 (quedaron fuera de su alcance):_
+
+- **Otros proveedores de identidad** — Microsoft, GitHub, etc.; la 002 quedó pendiente de esto y la 003 fue el primer proveedor. Si se agrega otro, reconsiderar si `google_sub` sigue siendo suficiente o tocar migrar a una tabla de identidades externas.
+- **Desvincular Google desde la cuenta** — o cambiar a otra cuenta de Google; no hay pantalla de gestión de cuenta todavía.
+- **Gestión de la restricción de apps de terceros del Workspace de la UCLA** — depende del administrador de la universidad, no del código; conviene vigilar la política y coordinar con ellos antes de la demo.
+- **Publicar la pantalla de consentimiento en Google** — sale de Testing cuando haya URL pública de despliegue (Render/Railway); exige además homepage y política de privacidad válidos.
 
 > Cada feature nueva se crea como `features/NNN-nombre-feature/` con `spec.md`, `plan.md` y `tasks.md` antes de tocar código.

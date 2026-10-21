@@ -59,11 +59,11 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 
 ### Cierre
 
-- [ ] Actualizar `tech-stack.md` con el flujo OAuth (Authorization Code + PKCE), las variables `GOOGLE_*`, la dependencia `google-auth-library`, las columnas `google_sub` y `contrasena_hash` nullable, y la nota de que un login fallido de Google se devuelve por redirect y no por JSON.
+- [x] Actualizar `tech-stack.md` con el flujo OAuth (Authorization Code + PKCE), las variables `GOOGLE_*`, la dependencia `google-auth-library`, las columnas `google_sub` y `contrasena_hash` nullable, y la nota de que un login fallido de Google se devuelve por redirect y no por JSON.
 - [ ] Publicar la pantalla de consentimiento en Google Cloud (salir del modo Testing) **antes de la demo**, para que pueda entrar cualquier estudiante y no solo el equipo de prueba.
-- [ ] Validar contra los criterios de aceptación de `spec.md`.
-- [ ] Mover la feature a "Hecho" en `../../constitution/roadmap.md`.
-- [ ] Agregar al Backlog/ideas del roadmap lo que el spec dejó fuera: otros proveedores de identidad, desvincular Google desde la cuenta, y gestión de la restricción de apps de terceros del Workspace.
+- [x] Validar contra los criterios de aceptación de `spec.md`.
+- [x] Mover la feature a "Hecho" en `../../constitution/roadmap.md`.
+- [x] Agregar al Backlog/ideas del roadmap lo que el spec dejó fuera: otros proveedores de identidad, desvincular Google desde la cuenta, y gestión de la restricción de apps de terceros del Workspace.
 
 ## Mantenimiento (checklist recurrente)
 
