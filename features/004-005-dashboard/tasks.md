@@ -14,8 +14,8 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 
 ### Frontend
 
-- [ ] Agregar al tema de Tailwind los tokens nuevos del prototipo: fondo de página `#FAF9FE`, sombra de tarjeta, radio 16px, los 5 colores de avatares y los badges de estado (éxito/peligro/pendiente/info/neutro), conservando Poppins en encabezados — `frontend/src/index.css`.
-- [ ] Crear el cliente del endpoint con el patrón de `api-sesion.js` (credentials same-origin, 401 ⇒ manejo propio) — `frontend/src/features/dashboard/api-resumen.js`.
+- [x] Agregar al tema de Tailwind los tokens nuevos del prototipo: fondo de página `#FAF9FE`, sombra de tarjeta, radio 16px, los 5 colores de avatares y los badges de estado (éxito/peligro/pendiente/info/neutro), conservando Poppins en encabezados — `frontend/src/index.css`.
+- [x] Crear el cliente del endpoint con el patrón de `api-sesion.js` (credentials same-origin, 401 ⇒ manejo propio) — `frontend/src/features/dashboard/api-resumen.js`.
 - [ ] Crear un helper de iniciales de avatar (primeras letras del nombre, color determinista entre los 5 colores del tema) — `frontend/src/features/dashboard/`.
 - [ ] Construir el sidebar del shell: marca, nav del estudiante desde un array de datos (Resumen, Buscar tutores, Mis tutorías, Tutorías grupales, Notificaciones, Ser tutor, Mi perfil; solo Resumen con ruta real y las demás a placeholders), tarjeta de ayuda estática, bloque de perfil mini y botón "Cerrar sesión" — `frontend/src/features/dashboard/`.
 - [ ] Implementar en el sidebar el menú hamburguesa para móvil (abierto/cerrado, sin bloquear el contenido) — `frontend/src/features/dashboard/`.

@@ -15,6 +15,42 @@
   --color-warning: #f59e0b;
   --color-danger: #dc2626;
 
+  --color-page: #faf9fe;
+  --color-purple-ink: #3b2378;
+  --radius-card: 16px;
+  --shadow-card: 0 8px 28px rgba(42, 20, 90, 0.06);
+
+  --color-avatar-purple: #e9ddff;
+  --color-avatar-purple-ink: #6632c6;
+  --color-avatar-coral: #ffe0e9;
+  --color-avatar-coral-ink: #bd315e;
+  --color-avatar-green: #dcfce7;
+  --color-avatar-green-ink: #167b40;
+  --color-avatar-blue: #dbeafe;
+  --color-avatar-blue-ink: #1d4ed8;
+  --color-avatar-amber: #fef3c7;
+  --color-avatar-amber-ink: #92400e;
+
+  --color-status-success: #eaf9ef;
+  --color-status-success-ink: #168447;
+  --color-status-pending: #fff7e3;
+  --color-status-pending-ink: #a56a00;
+  --color-status-danger: #fff0f0;
+  --color-status-danger-ink: #c92b3d;
+  --color-status-info: #eff6ff;
+  --color-status-info-ink: #2563a9;
+  --color-status-neutral: #f3f0f7;
+  --color-status-neutral-ink: #786d8c;
+
+  --color-icon-lilac: #f1eaff;
+  --color-icon-lilac-ink: #7c3aed;
+  --color-icon-pink: #fff0f5;
+  --color-icon-pink-ink: #e23c75;
+  --color-icon-green: #e8f9ee;
+  --color-icon-green-ink: #168447;
+  --color-icon-amber: #fff6df;
+  --color-icon-amber-ink: #bb7b0a;
+
   --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
@@ -23,7 +59,7 @@
   body {
     font-family: var(--font-sans);
     color: var(--color-text);
-    background-color: var(--color-bg);
+    background-color: var(--color-page);
   }
 }
 
