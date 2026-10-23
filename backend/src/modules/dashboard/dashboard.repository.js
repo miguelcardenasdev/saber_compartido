@@ -12,13 +12,14 @@ export const contarSolicitudesProgramadas = async (estudianteId) => {
 export const sumarHorasAceptadas = async (estudianteId) => {
   const solicitudes = await prisma.solicitudes_tutoria.findMany({
     where: { estudianteId, estado: "aceptada" },
-    select: { disponibilidad: { select: { horaInicio: true, horaFin: true } } },
+    select: { disponibilidad_tutores: { select: { horaInicio: true, horaFin: true } } },
   });
 
   return solicitudes.reduce((total, solicitud) => {
-    const { horaInicio, horaFin } = solicitud.disponibilidad;
-    const milisegundos = new Date(horaFin).getTime() - new Date(horaInicio).getTime();
-    return total + Math.max(milisegundos, 0);
+    const { horaInicio, horaFin } = solicitud.disponibilidad_tutores;
+    const segundos =
+      (new Date(horaFin).getTime() - new Date(horaInicio).getTime()) / 1000;
+    return total + Math.max(segundos, 0);
   }, 0);
 };
 
@@ -40,9 +41,9 @@ export const buscarProximasTutorias = async (estudianteId) => {
       usuarios_solicitudes_tutoria_tutor_idTousuarios: {
         select: { id: true, nombres: true, apellidos: true },
       },
-      disponibilidad: { select: { fecha: true, horaInicio: true, horaFin: true } },
+      disponibilidad_tutores: { select: { fecha: true, horaInicio: true, horaFin: true } },
     },
-    orderBy: { disponibilidad: { fecha: "asc" } },
+    orderBy: { disponibilidad_tutores: { fecha: "asc" } },
     take: 3,
   });
 };
