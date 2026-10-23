@@ -45,7 +45,7 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 - [x] Llamar `POST /api/auth/logout` sin sesión responde 200 sin error.
 - [x] Regresión 001: registro 201, 409 y enlace de verificación.
 - [x] Regresión 002: login correcto, pass mala y correo inexistente con respuesta idéntica, `/yo` con y sin cookie.
-- [ ] Regresión 003: acceso con Google completo y su redirección al dashboard. — **verificación manual del equipo**: lo automatizable pasó (302 a `accounts.google.com` con PKCE; `error=access_denied` ⇒ `?error=ACCESO_CANCELADO`; sin params ⇒ `?error=ERROR_GOOGLE`); el flujo completo requiere una cuenta de Google real.
+- [x] Regresión 003: acceso con Google completo y su redirección al dashboard. — **verificación manual del equipo**: lo automatizable pasó (302 a `accounts.google.com` con PKCE; `error=access_denied` ⇒ `?error=ACCESO_CANCELADO`; sin params ⇒ `?error=ERROR_GOOGLE`); el flujo completo requiere una cuenta de Google real
 - [x] El diseño replica el prototipo (fondo `#FAF9FE`, tarjetas con radio y sombra, avatares, badges) y el copy visible está en español.
 - [x] Correr `npm run lint` (`oxlint`) en frontend sin errores y `oxlint backend/src` sin errores nuevos.
 
