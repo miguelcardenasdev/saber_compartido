@@ -85,6 +85,11 @@ export const obtenerSesion = async (req, res, next) => {
   }
 };
 
+export const cerrarSesion = (req, res) => {
+  res.clearCookie(config.sesion.nombreCookie, { path: "/" });
+  return res.status(200).json({ mensaje: "Sesión cerrada" });
+};
+
 export const iniciarGoogle = (req, res, next) => {
   try {
     const verificador = randomBytes(32).toString("base64url");

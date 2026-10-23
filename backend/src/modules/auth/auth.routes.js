@@ -4,6 +4,7 @@ import {
   verificarCorreo,
   iniciarSesion,
   obtenerSesion,
+  cerrarSesion,
   iniciarGoogle,
   callbackGoogle,
 } from "./auth.controller.js";
@@ -18,6 +19,7 @@ router.post("/registro", validar(esquemaRegistro), registrar);
 router.get("/verificar/:token", verificarCorreo);
 router.post("/login", validar(esquemaLogin), iniciarSesion);
 router.get("/yo", requerirSesion, obtenerSesion);
+router.post("/logout", cerrarSesion);
 router.get("/google", iniciarGoogle);
 router.get("/google/callback", callbackGoogle);
 
