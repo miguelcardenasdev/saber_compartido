@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import { config } from "./config/index.js";
 import {transporte} from "./shared/email/transporte.js";
 import authRoutes from "./modules/auth/auth.routes.js";
+import dashboardRoutes from "./modules/dashboard/dashboard.routes.js";
 import { errorHandler } from "./shared/middlewares/errorHandler.js";
 
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 transporte.verify()
   .then(() => console.log("SMTP conectado correctamente"))
