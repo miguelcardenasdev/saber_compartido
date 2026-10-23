@@ -94,6 +94,7 @@ export const Sidebar = ({ abierto = false, alNavegar, onCerrarSesion }) => {
         abierto ? "translate-x-0" : "max-[900px]:-translate-x-full"
       }`}
       aria-label="Barra lateral"
+      id="sidebar-movil"
     >
       <div className="flex items-center gap-[11px] px-2 pb-[25px]">
         <span className="grid h-[42px] w-[42px] flex-none place-items-center rounded-[13px] bg-primary shadow-[0_7px_15px_rgba(124,58,237,0.19)]">

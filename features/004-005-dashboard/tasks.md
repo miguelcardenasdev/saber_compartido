@@ -18,7 +18,7 @@ _Checklist accionable derivada del `plan.md`. Tareas pequeñas y concretas; marc
 - [x] Crear el cliente del endpoint con el patrón de `api-sesion.js` (credentials same-origin, 401 ⇒ manejo propio) — `frontend/src/features/dashboard/api-resumen.js`.
 - [x] Crear un helper de iniciales de avatar (primeras letras del nombre, color determinista entre los 5 colores del tema) — `frontend/src/features/dashboard/`.
 - [x] Construir el sidebar del shell: marca, nav del estudiante desde un array de datos (Resumen, Buscar tutores, Mis tutorías, Tutorías grupales, Notificaciones, Ser tutor, Mi perfil; solo Resumen con ruta real y las demás a placeholders), tarjeta de ayuda estática, bloque de perfil mini y botón "Cerrar sesión" — `frontend/src/features/dashboard/`.
-- [ ] Implementar en el sidebar el menú hamburguesa para móvil (abierto/cerrado, sin bloquear el contenido) — `frontend/src/features/dashboard/`.
+- [x] Implementar en el sidebar el menú hamburguesa para móvil (abierto/cerrado, sin bloquear el contenido) — `frontend/src/features/dashboard/`.
 - [ ] Construir la topbar: breadcrumb con el nombre de la pantalla actual, campana que abre un drawer en estado vacío ("no tienes notificaciones todavía", sin "Marcar todas como leídas") y bloque de usuario — `frontend/src/features/dashboard/`.
 - [ ] Construir el footer con el texto del prototipo — `frontend/src/features/dashboard/`.
 - [ ] Crear el layout del shell (sidebar + main con `<Outlet/>` + topbar + footer) que se monta como ruta padre dentro de `RutaProtegida` — `frontend/src/features/dashboard/`.
