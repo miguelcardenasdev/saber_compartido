@@ -5,6 +5,7 @@
 1. **001 · Registro con correo institucional** — permite que un estudiante cree su cuenta con correo institucional y quede habilitado tras verificarla (REG-USR-001).
 2. **002 · Inicio de sesión** — autenticación con correo y contraseña; abre una sesión de 7 días en cookie `httpOnly`, bloquea el acceso si el correo no está verificado y protege `/dashboard` (REG-USR-002).
 3. **003 · Registro e inicio de sesión con Google** — botón "Continuar con Google" en el registro y el login; solo acepta cuentas `@amigo.edu.co`, crea la cuenta si no existe, vincula si ya existe y abre la misma sesión de 7 días de la 002 (REG-USR-003). La pantalla de consentimiento queda en modo Testing hasta el despliegue (usa la URL pública para publicarla).
+4. **004-005 · Acceso al dashboard, accesos directos y cerrar sesión** — shell completo del espacio académico (sidebar con las 7 entradas del estudiante, topbar con breadcrumb/campana-drawer, footer, layout con guard) y vista **Resumen** con banner de bienvenida, las 4 stat-cards desde `GET /api/dashboard/resumen`, 3 accesos directos, paneles Próximas tutorías / Tutores recomendados / Actividad reciente, y estados de carga, error y vacío; las otras 6 pantallas son placeholders "Próximamente" (DAS-EST-001, DAS-EST-002). **Cerrar sesión** vía `POST /api/auth/logout`: limpia la cookie `sesion` sin revocar el JWT (idempotente, responde 200 siempre).
 
 ## Siguiente 🔜
 
@@ -14,8 +15,6 @@ _Por definir — la siguiente entrada se concreta cuando su spec esté lista (ve
 
 _Orden aproximado según lo definido en tech-stack.md (por épicas y dependencias) — nada aquí está comprometido a una fecha, solo la entrada en "Siguiente" lo está:_
 
-- **Acceso al dashboard** — pantalla central tras iniciar sesión, con guard de autenticación (DAS-EST-001).
-- **Accesos directos del dashboard** — enlaces rápidos a buscar tutores, mis tutorías y cambiar a modo tutor (DAS-EST-002).
 - **Registro como tutor** — un estudiante se postula como tutor de una materia y adjunta su certificado de notas (TUT-REG-001).
 - **Verificación de tutor con IA** — extrae datos del certificado y permite al admin aprobar o rechazar el perfil (TUT-VER-001).
 - **Búsqueda de tutores** — filtra tutores ya verificados por materia (BUS-TUT-001).
@@ -33,7 +32,7 @@ _De la 002 (quedaron fuera de su alcance):_
 - **Reenviar correo de verificación** — reutiliza `correo.service.js`; permite al usuario con cuenta no verificada pedir un enlace nuevo desde el propio aviso de login (el token de 24 h ya existe, solo falta la UI y el endpoint).
 - **Recuperar / cambiar contraseña** — requiere definir el flujo de recuperación por correo y una regla de fortaleza coherente con la del registro.
 - **Límite de intentos fallidos** — protección anti fuerza bruta; no está definida en ninguna historia de usuario todavía.
-- **Cerrar sesión** — no figura en ninguna historia de usuario; además la sesión es stateless, así que habría que decidir si basta con borrar la cookie o se necesita revocación real (ver "Sesión de usuario" en `tech-stack.md`).
+- **Revocación anticipada de sesiones** — el logout de la 004-005 solo limpia la cookie; la sesión es stateless, así que el JWT sigue válido hasta expirar. Si se quiere invalidar antes (cambio de contraseña, cuenta eliminada, "cerrar sesión en todos los dispositivos"), hay que decidir el mecanismo (tabla de sesiones o lista negra) — ver "Sesión de usuario" en `tech-stack.md`.
 
 _De la 003 (quedaron fuera de su alcance):_
 

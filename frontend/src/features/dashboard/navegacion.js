@@ -42,3 +42,15 @@ export const GRUPOS_NAVEGACION = [
 export const PANTALLAS_PLACEHOLDER = GRUPOS_NAVEGACION.flatMap((grupo) =>
   grupo.enlaces.filter((enlace) => !enlace.inicio),
 );
+
+export const etiquetaDeRuta = (ruta) => {
+  const enlaces = GRUPOS_NAVEGACION.flatMap((grupo) => grupo.enlaces);
+  const coincidencia = enlaces.find((enlace) => enlace.ruta === ruta);
+  if (coincidencia) return coincidencia.etiqueta;
+
+  const segmento = ruta.split("/").filter(Boolean).pop() ?? "";
+  if (!segmento) return "Resumen";
+  return segmento
+    .replace(/-/g, " ")
+    .replace(/^./, (letra) => letra.toUpperCase());
+};
