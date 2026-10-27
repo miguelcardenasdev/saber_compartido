@@ -1,6 +1,6 @@
 # 003 · Registro e inicio de sesión con Google
 
-**Estado:** propuesta
+**Estado:** finalizado
 
 ## Qué hace
 

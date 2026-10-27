@@ -1,6 +1,6 @@
 # 004-005 · Acceso al dashboard y accesos directos (con cerrar sesión)
 
-**Estado:** propuesta
+**Estado:** finalizado
 
 > Feature unificada de las historias **DAS-EST-001** (acceso al dashboard) y **DAS-EST-002** (accesos directos del dashboard), más la funcionalidad de **cerrar sesión** que quedó fuera del alcance de la 002. Referencia visual: el prototipo `Saber-Compartido-Dashboard` (carpeta compartida por el equipo).
 
