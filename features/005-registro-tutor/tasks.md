@@ -1,0 +1,71 @@
+# Tasks · 006 Registro de tutor
+
+## Backend
+
+### Base de datos
+- [ ] Revisar el último script numerado de `database/` y elegir el siguiente número libre. (`database/`)
+- [ ] Comprobar con `SHOW INDEX FROM tutores_materias;` si existe un `UNIQUE (tutor_id, materia_id)`. Si no existe, verificar con una consulta que no haya duplicados y crearlo en el script. (`database/NNN_registro_tutor.sql`)
+- [ ] Crear la tabla `archivos_certificado`: `id` INT UNSIGNED autoincremental, `usuario_id` INT UNSIGNED NOT NULL con FK a `usuarios`, `nombre_original` VARCHAR(255), `tipo_mime` VARCHAR(100), `tamano_bytes` INT UNSIGNED, `contenido` LONGBLOB NOT NULL, `subido_en` TIMESTAMP con default `CURRENT_TIMESTAMP`. (`database/NNN_registro_tutor.sql`)
+- [ ] Añadir `archivo_id` INT UNSIGNED NULL con FK a `archivos_certificado` en `documentos_verificacion`. (`database/NNN_registro_tutor.sql`)
+- [ ] Añadir `descripcion` VARCHAR(500) NULL a `tutores_materias`. (`database/NNN_registro_tutor.sql`)
+- [ ] Ejecutar el script en el MySQL de Docker y confirmar los cambios en Workbench. (`database/NNN_registro_tutor.sql`)
+- [ ] Regenerar el esquema con `prisma db pull` y el cliente con `prisma generate`; confirmar que el tipo `Bytes` aparece en `contenido`. (`backend/prisma/schema.prisma`)
+
+### Catálogo de materias
+- [ ] Crear el repository con la consulta de todas las materias ordenadas por nombre. (`backend/src/modules/materias/materias.repository.js`)
+- [ ] Crear el service, que devuelve `{id, nombre}`. (`backend/src/modules/materias/materias.service.js`)
+- [ ] Crear el controller y las rutas con `GET /api/materias` protegido con `requerir-sesion`. (`backend/src/modules/materias/materias.controller.js`, `backend/src/modules/materias/materias.routes.js`)
+- [ ] Montar el router en la app. (`backend/src/app.js`)
+
+### Registro de solicitudes
+- [ ] Instalar `multer` y dejar documentada la justificación de la dependencia en el plan. (`backend/package.json`)
+- [ ] Crear el esquema Zod: `materias` (1 a 5 elementos `{materiaId, promedio}`, sin `materiaId` repetido), `promedio` como texto (coma a punto, máximo 2 decimales, entre 4.00 y 5.00 sin pasar por `float`) y `descripcion` opcional de hasta 500 caracteres. (`backend/src/modules/tutores/tutores.schema.js`)
+- [ ] Crear el middleware de carga: multer en memoria, un archivo, 5 MB, traducción de sus errores al contrato `{codigo, mensaje}`, parseo del campo `materias` serializado como JSON y comprobación del tipo real por los primeros bytes (PDF, JPG, PNG). (`backend/src/shared/cargar-certificado.js`)
+- [ ] Crear el repository: buscar solicitudes del usuario para una lista de materias, crear el archivo, crear o reactivar cada solicitud, crear cada fila de `documentos_verificacion`, y listar las solicitudes del usuario sin cargar `contenido`. (`backend/src/modules/tutores/tutores.repository.js`)
+- [ ] Crear el service: verificar que las materias existan, rechazar el envío completo (con la lista de materias) si alguna está `pendiente` o `aprobado`, reactivar las `rechazado`, y ejecutar todo en una sola transacción de Prisma. Debe ignorar cualquier `usuarioId` del cuerpo y no tocar `usuarios.rol`. (`backend/src/modules/tutores/tutores.service.js`)
+- [ ] Definir los códigos de error (`SOLICITUD_DUPLICADA`, `MATERIA_INEXISTENTE`, `ARCHIVO_REQUERIDO`, `ARCHIVO_TIPO_INVALIDO`, `ARCHIVO_MUY_GRANDE`) y el formato de respuesta. (`backend/src/modules/tutores/tutores.service.js`)
+- [ ] Crear el controller: `POST /api/tutores/solicitudes` (201) y `GET /api/tutores/solicitudes`. (`backend/src/modules/tutores/tutores.controller.js`)
+- [ ] Crear las rutas, ambas con `requerir-sesion`, y el POST con el middleware de carga y `validar`. (`backend/src/modules/tutores/tutores.routes.js`)
+- [ ] Montar el router en la app. (`backend/src/app.js`)
+- [ ] Confirmar que ningún endpoint ni log devuelve `contenido` del archivo. (`backend/src/modules/tutores/`)
+
+## Frontend
+
+- [ ] Leer la sección "Ser tutor" del prototipo `Saber-Compartido-Dashboard` y anotar estructura, textos, estados y colores, mapeándolos a los tokens de `index.css`. (`~/Escritorio/Saber-Compartido-Dashboard/`)
+- [ ] Crear la constante del programa académico fijo ("Tecnología en Desarrollo de Software"). (`frontend/src/features/tutor/constantes.js`)
+- [ ] Crear el cliente HTTP del catálogo siguiendo `api-resumen.js`. (`frontend/src/features/tutor/api-materias.js`)
+- [ ] Crear el cliente HTTP de solicitudes: `GET` y `POST` con `FormData` (sin fijar `Content-Type`, `materias` como JSON serializado), manejo del 401 y de `detalle` de Zod. (`frontend/src/features/tutor/api-tutor.js`)
+- [ ] Crear el formulario con: selección de 1 a 5 materias, un campo de promedio por cada materia elegida, programa académico en solo lectura, certificado, descripción opcional, aviso de revisión pendiente y botones "Limpiar" y "Enviar solicitud". (`frontend/src/features/tutor/formulario-registro-tutor.jsx`)
+- [ ] Añadir las validaciones en cliente (rango 4.00–5.00, máximo 2 decimales con coma o punto, tipo y 5 MB de archivo) y mostrar los errores del servidor junto a cada campo, conservando lo escrito si falla. (`frontend/src/features/tutor/formulario-registro-tutor.jsx`)
+- [ ] Crear el panel "Antes de postularte" (estático) y el panel "Estado de mi solicitud" con badges de estado, carga, error con "Reintentar" y vacío. (`frontend/src/features/tutor/panel-requisitos.jsx`, `frontend/src/features/tutor/panel-estado-solicitudes.jsx`)
+- [ ] Crear la pantalla que compone el formulario y los paneles, refresca la lista tras un envío exitoso, muestra la confirmación y, ante un 401, llama a `fijarUsuario(null)`. (`frontend/src/pages/Dashboard/SerTutor.jsx`)
+- [ ] Hacer que la entrada "Ser tutor" apunte a la ruta real y registrar la ruta dentro de `LayoutDashboard`. (`frontend/src/features/dashboard/navegacion.js`, `frontend/src/App.jsx`)
+- [ ] Verificar el diseño en móvil (una sola columna) y escritorio (dos columnas). (`frontend/src/pages/Dashboard/SerTutor.jsx`)
+
+## Pruebas / validación
+
+- [ ] Lint del backend: `npx oxlint src`. (`backend/`)
+- [ ] Lint del frontend: `npm run lint`. (`frontend/`)
+- [ ] Con curl (`127.0.0.1:3000`): `POST` sin sesión devuelve 401; `GET /api/materias` con sesión devuelve la lista. (`backend/`)
+- [ ] Con curl: envío válido de 2 materias con un PDF devuelve 201 y crea 2 filas `pendiente` y 2 filas en `documentos_verificacion` con el mismo `archivo_id`. (`backend/`)
+- [ ] Con curl, casos de error: promedio 3.99, 5.01, 4.123 y "abc"; materia repetida; materia inexistente; sin archivo; archivo `.txt`; archivo de más de 5 MB; archivo con extensión `.pdf` pero contenido distinto. (`backend/`)
+- [ ] Con curl: reenviar una materia `pendiente` o `aprobado` devuelve `SOLICITUD_DUPLICADA` y no crea nada; si cualquier materia del envío falla, no se guarda ninguna. (`backend/`)
+- [ ] Marcar una solicitud como `rechazado` en la BD y reenviarla: pasa a `pendiente`, se limpian `revisado_por` y `revisado_en` y hay un segundo documento. (`database/`)
+- [ ] Comprobar que `usuarios.rol` sigue siendo `estudiante` tras registrarse. (`database/`)
+- [ ] Probar un archivo de 5 MB contra la BD y confirmar que no falla por `max_allowed_packet`. (`database/`)
+- [ ] En el navegador: envío completo con éxito, errores por campo, estados de carga, vacío y error de red con "Reintentar", sesión expirada (401) y comparación visual con el prototipo en móvil y escritorio. (`frontend/`)
+- [ ] Regresión: registro, login, Google y logout siguen funcionando, y el Resumen sigue cargando. (`frontend/`, `backend/`)
+
+## Cierre
+
+- [ ] Revisar el diff completo y confirmar que no hay `console.log`, secretos ni archivos de prueba. (`./`)
+- [ ] Confirmar que `package.json` y el lock solo cambian por `multer`. (`backend/package.json`)
+- [ ] Hacer commit con un mensaje claro y `git push`. (`./`)
+- [ ] Escribir el resumen de la feature para la siguiente sesión. (`features/006-registro-tutor/`)
+
+## Mantenimiento
+
+- [ ] Mover 006 a "Hecho" en el roadmap y dejar TUT-VER-001 como siguiente. (`constitution/roadmap.md`)
+- [ ] Documentar en `tech-stack.md` la dependencia `multer`, las tablas `archivos_certificado` y `documentos_verificacion`, y la convención de guardar los bytes en la BD con `url_archivo` como referencia. (`constitution/tech-stack.md`)
+- [ ] Corregir en `tech-stack.md` que el linter es oxlint y no ESLint. (`constitution/tech-stack.md`)
+- [ ] Anotar en el backlog los pendientes: semestre del tutor, programa académico editable cuando la BD gestione programas y reemplazo del certificado. (`constitution/roadmap.md`)
