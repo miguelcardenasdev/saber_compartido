@@ -33,14 +33,19 @@ export const GRUPOS_NAVEGACION = [
   {
     etiqueta: "Mi espacio",
     enlaces: [
-      { ruta: "/dashboard/ser-tutor", etiqueta: "Ser tutor", icono: "ser-tutor" },
+      {
+        ruta: "/dashboard/ser-tutor",
+        etiqueta: "Ser tutor",
+        icono: "ser-tutor",
+        implementado: true,
+      },
       { ruta: "/dashboard/mi-perfil", etiqueta: "Mi perfil", icono: "perfil" },
     ],
   },
 ];
 
 export const PANTALLAS_PLACEHOLDER = GRUPOS_NAVEGACION.flatMap((grupo) =>
-  grupo.enlaces.filter((enlace) => !enlace.inicio),
+  grupo.enlaces.filter((enlace) => !enlace.inicio && !enlace.implementado),
 );
 
 export const etiquetaDeRuta = (ruta) => {

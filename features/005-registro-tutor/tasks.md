@@ -31,16 +31,16 @@
 
 ## Frontend
 
-- [ ] Leer la sección "Ser tutor" del prototipo `Saber-Compartido-Dashboard` y anotar estructura, textos, estados y colores, mapeándolos a los tokens de `index.css`. (`~/Escritorio/Saber-Compartido-Dashboard/`)
-- [ ] Crear la constante del programa académico fijo ("Tecnología en Desarrollo de Software"). (`frontend/src/features/tutor/constantes.js`)
-- [ ] Crear el cliente HTTP del catálogo siguiendo `api-resumen.js`. (`frontend/src/features/tutor/api-materias.js`)
-- [ ] Crear el cliente HTTP de solicitudes: `GET` y `POST` con `FormData` (sin fijar `Content-Type`, `materias` como JSON serializado), manejo del 401 y de `detalle` de Zod. (`frontend/src/features/tutor/api-tutor.js`)
-- [ ] Crear el formulario con: selección de 1 a 5 materias, un campo de promedio por cada materia elegida, programa académico en solo lectura, certificado, descripción opcional, aviso de revisión pendiente y botones "Limpiar" y "Enviar solicitud". (`frontend/src/features/tutor/formulario-registro-tutor.jsx`)
-- [ ] Añadir las validaciones en cliente (rango 4.00–5.00, máximo 2 decimales con coma o punto, tipo y 5 MB de archivo) y mostrar los errores del servidor junto a cada campo, conservando lo escrito si falla. (`frontend/src/features/tutor/formulario-registro-tutor.jsx`)
-- [ ] Crear el panel "Antes de postularte" (estático) y el panel "Estado de mi solicitud" con badges de estado, carga, error con "Reintentar" y vacío. (`frontend/src/features/tutor/panel-requisitos.jsx`, `frontend/src/features/tutor/panel-estado-solicitudes.jsx`)
-- [ ] Crear la pantalla que compone el formulario y los paneles, refresca la lista tras un envío exitoso, muestra la confirmación y, ante un 401, llama a `fijarUsuario(null)`. (`frontend/src/pages/Dashboard/SerTutor.jsx`)
-- [ ] Hacer que la entrada "Ser tutor" apunte a la ruta real y registrar la ruta dentro de `LayoutDashboard`. (`frontend/src/features/dashboard/navegacion.js`, `frontend/src/App.jsx`)
-- [ ] Verificar el diseño en móvil (una sola columna) y escritorio (dos columnas). (`frontend/src/pages/Dashboard/SerTutor.jsx`)
+- [x] Leer la sección "Ser tutor" del prototipo `Saber-Compartido-Dashboard` y anotar estructura, textos, estados y colores, mapeándolos a los tokens de `index.css`. (`~/Escritorio/Saber-Compartido-Dashboard/`)
+- [x] Crear la constante del programa académico fijo ("Tecnología en Desarrollo de Software"). (`frontend/src/features/tutor/constantes.js`)
+- [x] Crear el cliente HTTP del catálogo siguiendo `api-resumen.js`. (`frontend/src/features/tutor/api-materias.js`)
+- [x] Crear el cliente HTTP de solicitudes: `GET` y `POST` con `FormData` (sin fijar `Content-Type`, `materias` como JSON serializado), manejo del 401 y de `detalle` de Zod. (`frontend/src/features/tutor/api-tutor.js`)
+- [x] Crear el formulario con: selección de 1 a 5 materias, un campo de promedio por cada materia elegida, programa académico en solo lectura, certificado, descripción opcional, aviso de revisión pendiente y botones "Limpiar" y "Enviar solicitud". (`frontend/src/features/tutor/formulario-registro-tutor.jsx`)
+- [x] Añadir las validaciones en cliente (rango 4.00–5.00, máximo 2 decimales con coma o punto, tipo y 5 MB de archivo) y mostrar los errores del servidor junto a cada campo, conservando lo escrito si falla. (`frontend/src/features/tutor/formulario-registro-tutor.jsx`)
+- [x] Crear el panel "Antes de postularte" (estático) y el panel "Estado de mi solicitud" con badges de estado, carga, error con "Reintentar" y vacío. (`frontend/src/features/tutor/panel-requisitos.jsx`, `frontend/src/features/tutor/panel-estado-solicitudes.jsx`)
+- [x] Crear la pantalla que compone el formulario y los paneles, refresca la lista tras un envío exitoso, muestra la confirmación y, ante un 401, llama a `fijarUsuario(null)`. (`frontend/src/pages/Dashboard/SerTutor.jsx`)
+- [x] Hacer que la entrada "Ser tutor" apunte a la ruta real y registrar la ruta dentro de `LayoutDashboard`. (`frontend/src/features/dashboard/navegacion.js`, `frontend/src/App.jsx`)
+- [x] Verificar el diseño en móvil (una sola columna) y escritorio (dos columnas). (`frontend/src/pages/Dashboard/SerTutor.jsx`)
 
 ## Pruebas / validación
 
