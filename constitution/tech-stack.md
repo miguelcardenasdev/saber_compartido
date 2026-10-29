@@ -107,3 +107,4 @@
 - No subir `.env*` ni ninguna API key (Gemini, Groq, etc.) al repositorio.
 - No implementar procesamiento real de pagos — la plataforma solo registra la preferencia del estudiante (ver "Qué NO es" en mission.md).
 - No construir funcionalidad de video/llamadas — fuera de alcance del MVP.
+- No commitear sin pedir autorización — Por defecto NO está permitido.
