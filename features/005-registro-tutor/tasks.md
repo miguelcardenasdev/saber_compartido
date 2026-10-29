@@ -12,10 +12,10 @@
 - [x] Regenerar el esquema con `prisma db pull` y el cliente con `prisma generate`; confirmar que el tipo `Bytes` aparece en `contenido`. (`backend/prisma/schema.prisma`)
 
 ### Catálogo de materias
-- [ ] Crear el repository con la consulta de todas las materias ordenadas por nombre. (`backend/src/modules/materias/materias.repository.js`)
-- [ ] Crear el service, que devuelve `{id, nombre}`. (`backend/src/modules/materias/materias.service.js`)
-- [ ] Crear el controller y las rutas con `GET /api/materias` protegido con `requerir-sesion`. (`backend/src/modules/materias/materias.controller.js`, `backend/src/modules/materias/materias.routes.js`)
-- [ ] Montar el router en la app. (`backend/src/app.js`)
+- [x] Crear el repository con la consulta de todas las materias ordenadas por nombre. (`backend/src/modules/materias/materias.repository.js`)
+- [x] Crear el service, que devuelve `{id, nombre}`. (`backend/src/modules/materias/materias.service.js`)
+- [x] Crear el controller y las rutas con `GET /api/materias` protegido con `requerir-sesion`. (`backend/src/modules/materias/materias.controller.js`, `backend/src/modules/materias/materias.routes.js`)
+- [x] Montar el router en la app. (`backend/src/app.js`)
 
 ### Registro de solicitudes
 - [ ] Instalar `multer` y dejar documentada la justificación de la dependencia en el plan. (`backend/package.json`)
