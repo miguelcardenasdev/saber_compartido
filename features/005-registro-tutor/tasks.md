@@ -3,13 +3,13 @@
 ## Backend
 
 ### Base de datos
-- [ ] Revisar el último script numerado de `database/` y elegir el siguiente número libre. (`database/`)
-- [ ] Comprobar con `SHOW INDEX FROM tutores_materias;` si existe un `UNIQUE (tutor_id, materia_id)`. Si no existe, verificar con una consulta que no haya duplicados y crearlo en el script. (`database/NNN_registro_tutor.sql`)
-- [ ] Crear la tabla `archivos_certificado`: `id` INT UNSIGNED autoincremental, `usuario_id` INT UNSIGNED NOT NULL con FK a `usuarios`, `nombre_original` VARCHAR(255), `tipo_mime` VARCHAR(100), `tamano_bytes` INT UNSIGNED, `contenido` LONGBLOB NOT NULL, `subido_en` TIMESTAMP con default `CURRENT_TIMESTAMP`. (`database/NNN_registro_tutor.sql`)
-- [ ] Añadir `archivo_id` INT UNSIGNED NULL con FK a `archivos_certificado` en `documentos_verificacion`. (`database/NNN_registro_tutor.sql`)
-- [ ] Añadir `descripcion` VARCHAR(500) NULL a `tutores_materias`. (`database/NNN_registro_tutor.sql`)
-- [ ] Ejecutar el script en el MySQL de Docker y confirmar los cambios en Workbench. (`database/NNN_registro_tutor.sql`)
-- [ ] Regenerar el esquema con `prisma db pull` y el cliente con `prisma generate`; confirmar que el tipo `Bytes` aparece en `contenido`. (`backend/prisma/schema.prisma`)
+- [x] Revisar el último script numerado de `database/` y elegir el siguiente número libre. (`database/005_registro_tutor.sql`)
+- [x] Comprobar con `SHOW INDEX FROM tutores_materias;` si existe un `UNIQUE (tutor_id, materia_id)`. Si no existe, verificar con una consulta que no haya duplicados y crearlo en el script. Ya existía (`uq_tutor_materia` desde `001_schema_inicial.sql`); documentado en el script. (`database/005_registro_tutor.sql`)
+- [x] Crear la tabla `archivos_certificado`: `id` INT UNSIGNED autoincremental, `usuario_id` INT UNSIGNED NOT NULL con FK a `usuarios`, `nombre_original` VARCHAR(255), `tipo_mime` VARCHAR(100), `tamano_bytes` INT UNSIGNED, `contenido` LONGBLOB NOT NULL, `subido_en` TIMESTAMP con default `CURRENT_TIMESTAMP`. (`database/005_registro_tutor.sql`)
+- [x] Añadir `archivo_id` INT UNSIGNED NULL con FK a `archivos_certificado` en `documentos_verificacion`. (`database/005_registro_tutor.sql`)
+- [x] Añadir `descripcion` VARCHAR(500) NULL a `tutores_materias`. (`database/005_registro_tutor.sql`)
+- [x] Ejecutar el script en el MySQL de Docker y confirmar los cambios en Workbench. (`database/005_registro_tutor.sql`)
+- [x] Regenerar el esquema con `prisma db pull` y el cliente con `prisma generate`; confirmar que el tipo `Bytes` aparece en `contenido`. (`backend/prisma/schema.prisma`)
 
 ### Catálogo de materias
 - [ ] Crear el repository con la consulta de todas las materias ordenadas por nombre. (`backend/src/modules/materias/materias.repository.js`)

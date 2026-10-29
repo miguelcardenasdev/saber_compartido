@@ -44,21 +44,24 @@ model disponibilidad_tutores {
 }
 
 model documentos_verificacion {
-  id                        Int              @id @default(autoincrement()) @db.UnsignedInt
-  tutorMateriaId            Int              @map("tutor_materia_id") @db.UnsignedInt
-  urlArchivo                String           @map("url_archivo") @db.VarChar(500)
-  subidoEn                  DateTime         @default(now()) @map("subido_en") @db.Timestamp(0)
-  iaNombreExtraido          String?          @map("ia_nombre_extraido") @db.VarChar(150)
-  iaPrimerApellidoExtraido  String?          @map("ia_primer_apellido_extraido") @db.VarChar(150)
-  iaSegundoApellidoExtraido String?          @map("ia_segundo_apellido_extraido") @db.VarChar(150)
-  iaMateriaExtraida         String?          @map("ia_materia_extraida") @db.VarChar(150)
-  iaPromedioExtraido        Decimal?         @map("ia_promedio_extraido") @db.Decimal(3, 2)
-  iaFirmaDetectada          Boolean?         @map("ia_firma_detectada")
-  iaAlertas                 Json?            @map("ia_alertas")
-  iaProcesadoEn             DateTime?        @map("ia_procesado_en") @db.Timestamp(0)
-  tutores_materias          tutores_materias @relation(fields: [tutorMateriaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_dv_tutor_materia")
+  id                        Int                   @id @default(autoincrement()) @db.UnsignedInt
+  tutorMateriaId            Int                   @map("tutor_materia_id") @db.UnsignedInt
+  urlArchivo                String                @map("url_archivo") @db.VarChar(500)
+  archivo_id                Int?                  @db.UnsignedInt
+  subidoEn                  DateTime              @default(now()) @map("subido_en") @db.Timestamp(0)
+  iaNombreExtraido          String?               @map("ia_nombre_extraido") @db.VarChar(150)
+  iaPrimerApellidoExtraido  String?               @map("ia_primer_apellido_extraido") @db.VarChar(150)
+  iaSegundoApellidoExtraido String?               @map("ia_segundo_apellido_extraido") @db.VarChar(150)
+  iaMateriaExtraida         String?               @map("ia_materia_extraida") @db.VarChar(150)
+  iaPromedioExtraido        Decimal?              @map("ia_promedio_extraido") @db.Decimal(3, 2)
+  iaFirmaDetectada          Boolean?              @map("ia_firma_detectada")
+  iaAlertas                 Json?                 @map("ia_alertas")
+  iaProcesadoEn             DateTime?             @map("ia_procesado_en") @db.Timestamp(0)
+  archivos_certificado      archivos_certificado? @relation(fields: [archivo_id], references: [id], onUpdate: NoAction, map: "fk_dv_archivo")
+  tutores_materias          tutores_materias      @relation(fields: [tutorMateriaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_dv_tutor_materia")
 
   @@index([tutorMateriaId], map: "fk_dv_tutor_materia")
+  @@index([archivo_id], map: "fk_dv_archivo")
 }
 
 model inscripciones_sesion_grupal {
@@ -133,6 +136,7 @@ model tutores_materias {
   tutorId                                          Int                       @map("tutor_id") @db.UnsignedInt
   materiaId                                        Int                       @map("materia_id") @db.UnsignedInt
   promedioAcademico                                Decimal                   @map("promedio_academico") @db.Decimal(3, 2)
+  descripcion                                      String?                   @db.VarChar(500)
   estado                                           tutores_materias_estado   @default(pendiente)
   revisadoPor                                      Int?                      @map("revisado_por") @db.UnsignedInt
   revisadoEn                                       DateTime?                 @map("revisado_en") @db.Timestamp(0)
@@ -161,6 +165,7 @@ model usuarios {
   tokenExpira                                                     DateTime?                     @map("token_expira") @db.DateTime(0)
   creadoEn                                                        DateTime                      @default(now()) @map("creado_en") @db.Timestamp(0)
   actualizadoEn                                                   DateTime                      @default(now()) @map("actualizado_en") @db.Timestamp(0)
+  archivos_certificado                                            archivos_certificado[]
   calificaciones_calificaciones_estudiante_idTousuarios           calificaciones[]              @relation("calificaciones_estudiante_idTousuarios")
   calificaciones_calificaciones_tutor_idTousuarios                calificaciones[]              @relation("calificaciones_tutor_idTousuarios")
   disponibilidad_tutores                                          disponibilidad_tutores[]
@@ -170,6 +175,20 @@ model usuarios {
   solicitudes_tutoria_solicitudes_tutoria_tutor_idTousuarios      solicitudes_tutoria[]         @relation("solicitudes_tutoria_tutor_idTousuarios")
   tutores_materias_tutores_materias_revisado_porTousuarios        tutores_materias[]            @relation("tutores_materias_revisado_porTousuarios")
   tutores_materias_tutores_materias_tutor_idTousuarios            tutores_materias[]            @relation("tutores_materias_tutor_idTousuarios")
+}
+
+model archivos_certificado {
+  id                      Int                       @id @default(autoincrement()) @db.UnsignedInt
+  usuario_id              Int                       @db.UnsignedInt
+  nombre_original         String                    @db.VarChar(255)
+  tipo_mime               String                    @db.VarChar(100)
+  tamano_bytes            Int                       @db.UnsignedInt
+  contenido               Bytes
+  subido_en               DateTime                  @default(now()) @db.Timestamp(0)
+  usuarios                usuarios                  @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ac_usuario")
+  documentos_verificacion documentos_verificacion[]
+
+  @@index([usuario_id], map: "fk_ac_usuario")
 }
 
 enum tutores_materias_estado {
