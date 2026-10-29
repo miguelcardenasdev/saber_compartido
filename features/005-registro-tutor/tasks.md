@@ -58,10 +58,9 @@
 
 ## Cierre
 
-- [ ] Revisar el diff completo y confirmar que no hay `console.log`, secretos ni archivos de prueba. (`./`)
-- [ ] Confirmar que `package.json` y el lock solo cambian por `multer`. (`backend/package.json`)
-- [ ] Hacer commit con un mensaje claro y `git push`. (`./`)
-- [ ] Escribir el resumen de la feature para la siguiente sesión. (`features/006-registro-tutor/`)
+- [x] Revisar el diff completo y confirmar que no hay `console.log`, secretos ni archivos de prueba. (`./`)
+- [x] Confirmar que `package.json` y el lock solo cambian por `multer`. (`backend/package.json`)
+- [x] Hacer commit con un mensaje claro y `git push`. (`./`)
 
 ## Mantenimiento
 
