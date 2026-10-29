@@ -5,6 +5,7 @@ import {transporte} from "./shared/email/transporte.js";
 import authRoutes from "./modules/auth/auth.routes.js";
 import dashboardRoutes from "./modules/dashboard/dashboard.routes.js";
 import materiasRoutes from "./modules/materias/materias.routes.js";
+import tutoresRoutes from "./modules/tutores/tutores.routes.js";
 import { errorHandler } from "./shared/middlewares/errorHandler.js";
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/materias", materiasRoutes);
+app.use("/api/tutores", tutoresRoutes);
 
 transporte.verify()
   .then(() => console.log("SMTP conectado correctamente"))

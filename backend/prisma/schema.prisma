@@ -47,7 +47,7 @@ model documentos_verificacion {
   id                        Int                   @id @default(autoincrement()) @db.UnsignedInt
   tutorMateriaId            Int                   @map("tutor_materia_id") @db.UnsignedInt
   urlArchivo                String                @map("url_archivo") @db.VarChar(500)
-  archivo_id                Int?                  @db.UnsignedInt
+  archivoId                Int?                  @map("archivo_id") @db.UnsignedInt
   subidoEn                  DateTime              @default(now()) @map("subido_en") @db.Timestamp(0)
   iaNombreExtraido          String?               @map("ia_nombre_extraido") @db.VarChar(150)
   iaPrimerApellidoExtraido  String?               @map("ia_primer_apellido_extraido") @db.VarChar(150)
@@ -57,11 +57,11 @@ model documentos_verificacion {
   iaFirmaDetectada          Boolean?              @map("ia_firma_detectada")
   iaAlertas                 Json?                 @map("ia_alertas")
   iaProcesadoEn             DateTime?             @map("ia_procesado_en") @db.Timestamp(0)
-  archivos_certificado      archivos_certificado? @relation(fields: [archivo_id], references: [id], onUpdate: NoAction, map: "fk_dv_archivo")
+  archivos_certificado      archivos_certificado? @relation(fields: [archivoId], references: [id], onUpdate: NoAction, map: "fk_dv_archivo")
   tutores_materias          tutores_materias      @relation(fields: [tutorMateriaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_dv_tutor_materia")
 
   @@index([tutorMateriaId], map: "fk_dv_tutor_materia")
-  @@index([archivo_id], map: "fk_dv_archivo")
+  @@index([archivoId], map: "fk_dv_archivo")
 }
 
 model inscripciones_sesion_grupal {
@@ -179,16 +179,16 @@ model usuarios {
 
 model archivos_certificado {
   id                      Int                       @id @default(autoincrement()) @db.UnsignedInt
-  usuario_id              Int                       @db.UnsignedInt
-  nombre_original         String                    @db.VarChar(255)
-  tipo_mime               String                    @db.VarChar(100)
-  tamano_bytes            Int                       @db.UnsignedInt
+  usuarioId               Int                       @map("usuario_id") @db.UnsignedInt
+  nombreOriginal          String                    @map("nombre_original") @db.VarChar(255)
+  tipoMime                String                    @map("tipo_mime") @db.VarChar(100)
+  tamanoBytes             Int                       @map("tamano_bytes") @db.UnsignedInt
   contenido               Bytes
-  subido_en               DateTime                  @default(now()) @db.Timestamp(0)
-  usuarios                usuarios                  @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ac_usuario")
+  subidoEn                DateTime                  @default(now()) @map("subido_en") @db.Timestamp(0)
+  usuarios                usuarios                  @relation(fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ac_usuario")
   documentos_verificacion documentos_verificacion[]
 
-  @@index([usuario_id], map: "fk_ac_usuario")
+  @@index([usuarioId], map: "fk_ac_usuario")
 }
 
 enum tutores_materias_estado {

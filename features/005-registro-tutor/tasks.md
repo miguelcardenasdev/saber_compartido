@@ -18,16 +18,16 @@
 - [x] Montar el router en la app. (`backend/src/app.js`)
 
 ### Registro de solicitudes
-- [ ] Instalar `multer` y dejar documentada la justificación de la dependencia en el plan. (`backend/package.json`)
-- [ ] Crear el esquema Zod: `materias` (1 a 5 elementos `{materiaId, promedio}`, sin `materiaId` repetido), `promedio` como texto (coma a punto, máximo 2 decimales, entre 4.00 y 5.00 sin pasar por `float`) y `descripcion` opcional de hasta 500 caracteres. (`backend/src/modules/tutores/tutores.schema.js`)
-- [ ] Crear el middleware de carga: multer en memoria, un archivo, 5 MB, traducción de sus errores al contrato `{codigo, mensaje}`, parseo del campo `materias` serializado como JSON y comprobación del tipo real por los primeros bytes (PDF, JPG, PNG). (`backend/src/shared/cargar-certificado.js`)
-- [ ] Crear el repository: buscar solicitudes del usuario para una lista de materias, crear el archivo, crear o reactivar cada solicitud, crear cada fila de `documentos_verificacion`, y listar las solicitudes del usuario sin cargar `contenido`. (`backend/src/modules/tutores/tutores.repository.js`)
-- [ ] Crear el service: verificar que las materias existan, rechazar el envío completo (con la lista de materias) si alguna está `pendiente` o `aprobado`, reactivar las `rechazado`, y ejecutar todo en una sola transacción de Prisma. Debe ignorar cualquier `usuarioId` del cuerpo y no tocar `usuarios.rol`. (`backend/src/modules/tutores/tutores.service.js`)
-- [ ] Definir los códigos de error (`SOLICITUD_DUPLICADA`, `MATERIA_INEXISTENTE`, `ARCHIVO_REQUERIDO`, `ARCHIVO_TIPO_INVALIDO`, `ARCHIVO_MUY_GRANDE`) y el formato de respuesta. (`backend/src/modules/tutores/tutores.service.js`)
-- [ ] Crear el controller: `POST /api/tutores/solicitudes` (201) y `GET /api/tutores/solicitudes`. (`backend/src/modules/tutores/tutores.controller.js`)
-- [ ] Crear las rutas, ambas con `requerir-sesion`, y el POST con el middleware de carga y `validar`. (`backend/src/modules/tutores/tutores.routes.js`)
-- [ ] Montar el router en la app. (`backend/src/app.js`)
-- [ ] Confirmar que ningún endpoint ni log devuelve `contenido` del archivo. (`backend/src/modules/tutores/`)
+- [x] Instalar `multer` y dejar documentada la justificación de la dependencia en el plan. (`backend/package.json`)
+- [x] Crear el esquema Zod: `materias` (1 a 5 elementos `{materiaId, promedio}`, sin `materiaId` repetido), `promedio` como texto (coma a punto, máximo 2 decimales, entre 4.00 y 5.00 sin pasar por `float`) y `descripcion` opcional de hasta 500 caracteres. (`backend/src/modules/tutores/tutores.schema.js`)
+- [x] Crear el middleware de carga: multer en memoria, un archivo, 5 MB, traducción de sus errores al contrato `{codigo, mensaje}`, parseo del campo `materias` serializado como JSON y comprobación del tipo real por los primeros bytes (PDF, JPG, PNG). (`backend/src/shared/cargar-certificado.js`)
+- [x] Crear el repository: buscar solicitudes del usuario para una lista de materias, crear el archivo, crear o reactivar cada solicitud, crear cada fila de `documentos_verificacion`, y listar las solicitudes del usuario sin cargar `contenido`. (`backend/src/modules/tutores/tutores.repository.js`)
+- [x] Crear el service: verificar que las materias existan, rechazar el envío completo (con la lista de materias) si alguna está `pendiente` o `aprobado`, reactivar las `rechazado`, y ejecutar todo en una sola transacción de Prisma. Debe ignorar cualquier `usuarioId` del cuerpo y no tocar `usuarios.rol`. (`backend/src/modules/tutores/tutores.service.js`)
+- [x] Definir los códigos de error (`SOLICITUD_DUPLICADA`, `MATERIA_INEXISTENTE`, `ARCHIVO_REQUERIDO`, `ARCHIVO_TIPO_INVALIDO`, `ARCHIVO_MUY_GRANDE`) y el formato de respuesta. (`backend/src/modules/tutores/tutores.service.js`)
+- [x] Crear el controller: `POST /api/tutores/solicitudes` (201) y `GET /api/tutores/solicitudes`. (`backend/src/modules/tutores/tutores.controller.js`)
+- [x] Crear las rutas, ambas con `requerir-sesion`, y el POST con el middleware de carga y `validar`. (`backend/src/modules/tutores/tutores.routes.js`)
+- [x] Montar el router en la app. (`backend/src/app.js`)
+- [x] Confirmar que ningún endpoint ni log devuelve `contenido` del archivo. (`backend/src/modules/tutores/`)
 
 ## Frontend
 

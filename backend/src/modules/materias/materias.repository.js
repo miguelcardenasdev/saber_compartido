@@ -6,3 +6,10 @@ export const buscarTodas = async () => {
     orderBy: { nombre: "asc" },
   });
 };
+
+export const buscarPorIds = async (ids) => {
+  return prisma.materias.findMany({
+    where: { id: { in: ids } },
+    select: { id: true, nombre: true },
+  });
+};
