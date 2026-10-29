@@ -44,17 +44,17 @@
 
 ## Pruebas / validación
 
-- [ ] Lint del backend: `npx oxlint src`. (`backend/`)
-- [ ] Lint del frontend: `npm run lint`. (`frontend/`)
-- [ ] Con curl (`127.0.0.1:3000`): `POST` sin sesión devuelve 401; `GET /api/materias` con sesión devuelve la lista. (`backend/`)
-- [ ] Con curl: envío válido de 2 materias con un PDF devuelve 201 y crea 2 filas `pendiente` y 2 filas en `documentos_verificacion` con el mismo `archivo_id`. (`backend/`)
-- [ ] Con curl, casos de error: promedio 3.99, 5.01, 4.123 y "abc"; materia repetida; materia inexistente; sin archivo; archivo `.txt`; archivo de más de 5 MB; archivo con extensión `.pdf` pero contenido distinto. (`backend/`)
-- [ ] Con curl: reenviar una materia `pendiente` o `aprobado` devuelve `SOLICITUD_DUPLICADA` y no crea nada; si cualquier materia del envío falla, no se guarda ninguna. (`backend/`)
-- [ ] Marcar una solicitud como `rechazado` en la BD y reenviarla: pasa a `pendiente`, se limpian `revisado_por` y `revisado_en` y hay un segundo documento. (`database/`)
-- [ ] Comprobar que `usuarios.rol` sigue siendo `estudiante` tras registrarse. (`database/`)
-- [ ] Probar un archivo de 5 MB contra la BD y confirmar que no falla por `max_allowed_packet`. (`database/`)
-- [ ] En el navegador: envío completo con éxito, errores por campo, estados de carga, vacío y error de red con "Reintentar", sesión expirada (401) y comparación visual con el prototipo en móvil y escritorio. (`frontend/`)
-- [ ] Regresión: registro, login, Google y logout siguen funcionando, y el Resumen sigue cargando. (`frontend/`, `backend/`)
+- [x] Lint del backend: `npx oxlint src`. (`backend/`)
+- [x] Lint del frontend: `npm run lint`. (`frontend/`)
+- [x] Con curl (`127.0.0.1:3000`): `POST` sin sesión devuelve 401; `GET /api/materias` con sesión devuelve la lista. (`backend/`)
+- [x] Con curl: envío válido de 2 materias con un PDF devuelve 201 y crea 2 filas `pendiente` y 2 filas en `documentos_verificacion` con el mismo `archivo_id`. (`backend/`)
+- [x] Con curl, casos de error: promedio 3.99, 5.01, 4.123 y "abc"; materia repetida; materia inexistente; sin archivo; archivo `.txt`; archivo de más de 5 MB; archivo con extensión `.pdf` pero contenido distinto. (`backend/`)
+- [x] Con curl: reenviar una materia `pendiente` o `aprobado` devuelve `SOLICITUD_DUPLICADA` y no crea nada; si cualquier materia del envío falla, no se guarda ninguna. (`backend/`)
+- [x] Marcar una solicitud como `rechazado` en la BD y reenviarla: pasa a `pendiente`, se limpian `revisado_por` y `revisado_en` y hay un segundo documento. (`database/`)
+- [x] Comprobar que `usuarios.rol` sigue siendo `estudiante` tras registrarse. (`database/`)
+- [x] Probar un archivo de 5 MB contra la BD y confirmar que no falla por `max_allowed_packet`. (`database/`)
+- [x] En el navegador: envío completo con éxito, errores por campo, estados de carga, vacío y error de red con "Reintentar", sesión expirada (401) y comparación visual con el prototipo en móvil y escritorio. (`frontend/`)
+- [x] Regresión: registro, login, Google y logout siguen funcionando, y el Resumen sigue cargando. (`frontend/`, `backend/`)
 
 ## Cierre
 

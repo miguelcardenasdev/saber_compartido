@@ -6,7 +6,7 @@ export const buscarMaterias = async (materiaIds) => buscarPorIds(materiaIds);
 export const buscarSolicitudesDelTutor = async (tutorId, materiaIds) => {
   return prisma.tutores_materias.findMany({
     where: { tutorId, materiaId: { in: materiaIds } },
-    select: { materiaId: true, estado: true },
+    select: { id: true, materiaId: true, estado: true },
   });
 };
 
